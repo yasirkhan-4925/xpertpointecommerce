@@ -26,3 +26,13 @@ main{
   height: 80px;
   
 }
+
+.productLink{
+  text-decoration: none;
+}
+
+
+.productLink:hover{
+  text-decoration-color: darkgray;
+  text-decoration: underline;
+}
