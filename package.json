@@ -1,0 +1,14 @@
+{
+  "name": "ecommerce-app",
+  "version": "1.0.0",
+  "description": "This app is shopping app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "author": "Muhammad Yasir Khan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
