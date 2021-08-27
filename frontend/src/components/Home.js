@@ -14,7 +14,7 @@ const Home = () => {
         const getProducts = async () => {
               
             const res = await axios.get('/api/products')
-              console.log('these are our products' + res)
+             
             setProduct(res.data);
              
         }
