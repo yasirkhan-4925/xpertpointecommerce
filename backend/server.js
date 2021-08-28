@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import connect from './config/mongoConnect.js';
+import productRoutes from './routes/productRoutes.js'
+
 
 import products from './data/products.js';
 dotenv.config();
@@ -14,17 +16,15 @@ app.get('/', (req, res) => {
   res.send('api is running....');
 });
 
-app.get('/api/products', (req, res) => {
-  res.json(products);
-});
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find((product) => product._id === req.params.id);
-  if (product) {
-    res.json(product);
-  } else {
-    res.json({ error: 'no product found' });
-  }
-});
+
+
+// routes
+
+
+app.use('/api/products', productRoutes);
+
+
+
 
 const port = process.env.PORT || 5000;
 

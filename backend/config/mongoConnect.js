@@ -15,6 +15,7 @@ const connect = async () => {
     }
     catch(err) {
         console.error(`Error: ${err.message}`.red.underline)
+        process.exit(1);
     }
 
 }
