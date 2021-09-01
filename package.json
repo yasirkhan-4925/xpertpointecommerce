@@ -1,5 +1,6 @@
 {
   "name": "ecommerce-app",
+  "proxy":"http://127.0.0.1:5000",
   "version": "1.0.0",
   "type": "module",
   "description": "This app is shopping app",
@@ -26,4 +27,6 @@
     "concurrently": "^6.2.0",
     "nodemon": "^2.0.9"
   }
+ 
+  
 }
