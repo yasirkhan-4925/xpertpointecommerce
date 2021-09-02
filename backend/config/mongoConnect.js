@@ -7,6 +7,8 @@ const connect = async () => {
         const conn = await mongoose.connect(process.env.CONNECTION_STRING, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
+            
+            
            
         })
         
