@@ -37,3 +37,11 @@ main{
   text-decoration: underline;
 }
 
+.qtyButton{
+  color: white;
+  border-radius: 50%;
+  background-color: black;
+  height:28px;
+  width: 28px;
+  font-weight: bold;
+}
