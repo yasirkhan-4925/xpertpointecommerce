@@ -5,6 +5,11 @@ import { listProduct} from '../Actions/productActions'
 import axios from 'axios'
 import { Row, Col} from 'react-bootstrap'
 import Product from './Product'
+import { Spinner } from 'react-bootstrap';
+import AlertDisplay from './AlertDisplay'
+
+
+
 
 
 
@@ -24,7 +29,7 @@ const Home = ({ product ,listProduct , loading,error}) => {
                 Lattest Products
             </h1>
 
-            {loading ? <h1>Loading....</h1> : error ? <h3>{error} </h3> :  <Row>
+            {loading ? <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> : error ? <AlertDisplay variant='danger'  error={ error}/>  :  <Row>
                   
                   {product.map((product) => (
                       <Col key={product._id} sm={6}  md={6}  lg={3}>

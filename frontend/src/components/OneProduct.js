@@ -1,28 +1,37 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Rating from './Rating'
+import { useDispatch, useSelector } from 'react-redux'
+import { productDetails } from '../Actions/productActions.js'
+import { Spinner } from 'react-bootstrap';
+import AlertDisplay from './AlertDisplay'
 
 
 
 const OneProduct = ({match}) => {
-     const [product , setProduct] = useState({})
+    
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const getProduct = async () => {
-            const res = await axios.get(`/api/products/${match.params.id}`)
-            setProduct(res.data)
-        }
-        getProduct();
-    },[])
+  const productDetail = useSelector((state) => (state.productDetail));
+  const { product , loading , error  } = productDetail;
+
+
+  useEffect(() => {
+     dispatch(productDetails(match.params.id))
+   },[dispatch])
+   
+
+
     
     return (
         <>
         <Link className='btn btn-light my-3 ' to='/'>
           Go Back
         </Link>
-        <Row>
+
+        { loading ?  <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> :error ?<AlertDisplay variant='danger'  error={ error}/> : <Row>
           <Col md={6}>
             <Image src={product.image} alt='product image' fluid />
           </Col>
@@ -76,7 +85,9 @@ const OneProduct = ({match}) => {
               </ListGroup>
             </Card>
           </Col>
-        </Row>
+        </Row>}
+
+        
       </>
    )
 
