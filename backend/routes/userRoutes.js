@@ -17,6 +17,15 @@ router.post('/login', asyncHandler( async (req, res) => {
     const { email, password } = req.body;
     
     const user = await User.findOne({ email })
+         
+    if (email.trim() === '') {
+        throw new Error('please enter email')
+    }
+    
+
+    if (password.trim() === '') {
+        throw new Error('Please Enter Password')
+    }
     if (user && (await user.matchPassword(password))) {
         
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
