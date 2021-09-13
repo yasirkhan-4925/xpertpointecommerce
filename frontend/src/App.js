@@ -6,6 +6,7 @@ import Home from './components/Home'
 import OneProduct from './components/OneProduct'
 import CartScreen from './components/CartScreen'
 import LoginScreen from './components/LoginScreen';
+import Register from './components/Register';
 
 
 
@@ -28,6 +29,8 @@ const  App  = () => {
           <Route path='/product/:id' component={OneProduct} exact />
           <Route path='/cart/:id?' component={CartScreen} exact />
           <Route path='/login' component={LoginScreen} exact />
+          <Route path='/register' component={Register} exact />
+          
           
       
        

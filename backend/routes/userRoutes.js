@@ -95,7 +95,7 @@ router.post('/', asyncHandler(async (req, res) => {
     
     if (userExist) {
         res.status(400)
-        throw new Error('User alread Exist')
+        throw new Error('User alread exist with that email')
     }
 
     const user = await User.create({

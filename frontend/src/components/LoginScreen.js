@@ -13,7 +13,7 @@ import AlertDisplay from './AlertDisplay'
 const LoginScreen = ({location , history})=>{
   
 
-    const [validated, setValidated] = useState(false);
+  
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -29,6 +29,7 @@ const LoginScreen = ({location , history})=>{
 
         if (user) {
             history.push(redirect)
+            console.log(history)
         }
       
     },[history,redirect,user])
