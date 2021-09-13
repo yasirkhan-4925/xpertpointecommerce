@@ -26,21 +26,24 @@ const Register = ({location , history}) => {
     const redirect = location.search ? location.search.split('=')[1] : '/'
     const dispatch = useDispatch()
     const userRegister = useSelector(state => state.userRegister)
+    const {  loading, error } = userRegister
     const userLogin = useSelector(state => state.userLogin.user)
-    const { user, loading, error } = userRegister
+    
      
 
     useEffect(() => {
         if (userLogin) {
             history.push('/')
-            console.log(history)
+          
            
         }
-    },[ history , redirect, user , userLogin])
+    },[ history , redirect,  userLogin])
 
     return (
 
         <FormContainer>
+             {error && <AlertDisplay variant='danger' error={error} />}
+                        {loading && <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> }
             <Formik validationSchema={schema} initialValues={{
                 name: '',
                 email: '',
@@ -61,7 +64,8 @@ const Register = ({location , history}) => {
             }}>
             
             {({values,handleChange, handleSubmit  , touched, errors, isSubmitting, isValid}) => {
-                return (
+                    return (
+                       
                     <Form noValidate onSubmit={handleSubmit}>
 
                         <Form.Group controlId='name'>
