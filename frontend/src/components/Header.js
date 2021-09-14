@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import {Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Actions/userActions';
+import '../index.css'
 
 
 
@@ -33,8 +34,9 @@ const Header = () => {
             <Nav className=' nav'>
               
 
-              {user ? <NavDropdown title={user.name} id='username'>  
-               <Link to='/profile' style={{textDecoration:'none'}}>  <NavDropdown.Item >Profile</NavDropdown.Item></Link>
+              {user ? <NavDropdown title={user.name} id='username'>
+             
+             <NavDropdown.Item ><Link className='profileLink' to='/profile' style={{textDecoration:'none' , color:'grey'}}>Profile</Link></NavDropdown.Item> 
                <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
             
               

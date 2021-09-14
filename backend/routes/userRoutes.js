@@ -51,11 +51,11 @@ router.post('/login', asyncHandler( async (req, res) => {
 
 
 // @desc: get single user
-// @route: /api/users
+// @route: /api/users/profile
 // @acess: private
 
 
-router.get('/', protect, asyncHandler(async (req , res) => {
+router.get('/profile', protect, asyncHandler(async (req , res) => {
       
     const user = await User.findById(req.user._id);
 

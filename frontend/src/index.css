@@ -49,3 +49,9 @@ main{
   font-size: 20px;
 }
 
+
+.profileLink :hover{
+  color: white !important;
+
+  
+}
