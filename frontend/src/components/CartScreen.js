@@ -36,6 +36,11 @@ const CartScreen = ({ match, location, history }) => {
         dispatch(removeFromCart(id))
     }
 
+
+    const checkoutHandler = () => {
+        history.push('/login?redirect=shipping')
+    }
+
  
     
  
@@ -105,7 +110,7 @@ const CartScreen = ({ match, location, history }) => {
                             {`Rs ${ cartItems.reduce((acc,item) => acc + item.quantity*item.price , 0 )}`}
                         </ListGroup.Item>
                         <ListGroup.Item>
-                         <Button style={{width:'100%'}}  className=' btn-block' disabled={cartItems.length === 0} type='button' variant='dark'>Proceed To Checkout</Button>
+                         <Button style={{width:'100%'}} onClick={checkoutHandler}  className=' btn-block' disabled={cartItems.length === 0} type='button' variant='dark'>Proceed To Checkout</Button>
                         </ListGroup.Item>
                   </ListGroup>
                 </Card>

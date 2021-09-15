@@ -4,6 +4,8 @@ import { Row, Col, Button, Form , Spinner ,Container} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { getUserDetails , updateProfile } from '../Actions/userActions'
+
 import AlertDisplay from './AlertDisplay'
 import { Formik, useFormikContext } from 'formik'
 import * as Yup from 'yup'
@@ -22,21 +24,50 @@ const schema = Yup.object({
 
 
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ history , location}) => {
     
    
     
-     const formRef = useRef();
+    const formRef = useRef();
+    const dispatch = useDispatch();
+    const userIsLogin = useSelector(state => state.userLogin.user)
+    const { user, error, loading } = useSelector(state => state.userDetails)
+    const {success} = useSelector(state => state.updateUserProfile)
+    
+    
+    
+    
+    
     useEffect(() => {
         
-        formRef.current.setFieldValue('name','Yasir khan')
-        formRef.current.setFieldValue('email','iammuhammadyasirkhan@gmail.com')
-         
+      
+        if (!userIsLogin) {
+            history.push('/login')
+        }
+        else {
+            if (!user.name) {
+
+                dispatch(getUserDetails())
+              
+                
+            }
+            else {
+                if (formRef.current){
+                    formRef.current.setFieldValue('name',user.name)
+                    formRef.current.setFieldValue('email',user.email)
+                     
+                }
+               
+            }
+        }
+
+       
+       
         
         
         
       
-     },[])
+     },[userIsLogin , history , user ,dispatch])
     return (
           
         <>
@@ -44,17 +75,18 @@ const ProfileScreen = () => {
             <Row>
                 
                 <Col sm={12} md={4}>
-                    <h2>My Profile</h2>
-                           
-                    <Formik  innerRef={formRef}  validationSchema={schema} initialValues={{
+                        <h2>My Profile</h2>
+                        {success && <AlertDisplay variant='success' error={'Profile Updated '} />}
+                    {error && <AlertDisplay variant='danger' error={error} />}
+                    {loading ? <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> : <Formik  innerRef={formRef}  validationSchema={schema} initialValues={{
                 name: '',
                 email: '',
                 passowrd: '',
                 confirmPassword: ''
             }} onSubmit={(data, { setSubmitting})=> {
                  
-             
-
+                const { name ,email, password} = data
+                dispatch(updateProfile({id:userIsLogin._id, name ,email, password}))
                 console.log(data)
                
 
@@ -104,7 +136,7 @@ const ProfileScreen = () => {
                             <Form.Control.Feedback type='invalid' >{errors.confirmPassword}</Form.Control.Feedback>
 
                         </Form.Group>
-                        <Button  style={{ marginTop: '10px' }} type='submit' variant='primary'>Register</Button>
+                        <Button  style={{ marginTop: '10px' }} type='submit' variant='primary'>Update</Button>
                         
                         
                     
@@ -115,7 +147,9 @@ const ProfileScreen = () => {
             }}
             
 
-       </Formik>
+       </Formik>  }
+                           
+                    
                         
 
                 </Col>

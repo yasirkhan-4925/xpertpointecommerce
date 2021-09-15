@@ -5,14 +5,16 @@ import {productListReducer , productDetailsReducer} from './reducers/productRedu
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { cartReducer } from './reducers/cartReducers.js';
-import {userLoginReducer , userRegisterReducer}from './reducers/userReducers.js'
+import {userLoginReducer , userRegisterReducer , userDetailsReducer,updateUserProfileReducer}from './reducers/userReducers.js'
 
 const reducer = combineReducers({
   productList: productListReducer,
   productDetail: productDetailsReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
-  userRegister:userRegisterReducer
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  updateUserProfile:updateUserProfileReducer
   
 });
 

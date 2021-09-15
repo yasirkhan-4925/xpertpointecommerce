@@ -52,7 +52,7 @@ const Register = ({location , history}) => {
             }} onSubmit={(data, { setSubmitting})=> {
                  
              
-
+                 
                 // dispatch
                 const { name, email, password } = data
                 
