@@ -33,7 +33,7 @@ const Register = ({location , history}) => {
 
     useEffect(() => {
         if (userLogin) {
-            history.push('/')
+            history.push(redirect)
           
            
         }
@@ -42,9 +42,10 @@ const Register = ({location , history}) => {
     return (
 
         <FormContainer>
+              <h1>Register</h1>
              {error && <AlertDisplay variant='danger' error={error} />}
                         {loading && <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> }
-            <Formik validationSchema={schema} initialValues={{
+            <Formik validateOnChange={false} validateOnBlur={false} validationSchema={schema} initialValues={{
                 name: '',
                 email: '',
                 passowrd: '',

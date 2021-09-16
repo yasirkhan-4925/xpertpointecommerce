@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_TO_CART , REMOVE_FROM_CART} from '../types/cartTypes'
+import { ADD_TO_CART , REMOVE_FROM_CART , ADD_SHIPPING_ADDRESS_TO_CART} from '../types/cartTypes'
 
 
 export const addToCart = (id, quantity) => {
@@ -34,4 +34,17 @@ export const removeFromCart = (id) => {
     }
 
     
+}
+
+
+export const addShippingAddress = (data) => {
+
+
+    return (dispatch) => {
+        dispatch({type:ADD_SHIPPING_ADDRESS_TO_CART , payload:data})
+        localStorage.setItem('shippingAddress' ,JSON.stringify(data))
+    }
+    
+  
+
 }

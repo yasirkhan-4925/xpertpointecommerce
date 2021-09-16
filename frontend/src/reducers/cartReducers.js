@@ -1,8 +1,8 @@
-import { ADD_TO_CART , REMOVE_FROM_CART } from '../types/cartTypes'
+import { ADD_TO_CART , REMOVE_FROM_CART , ADD_SHIPPING_ADDRESS_TO_CART } from '../types/cartTypes'
 
 
 
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (state = { cartItems: [] , shippingAddress:{} }, action) => {
     
     switch (action.type) {
         
@@ -29,6 +29,14 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
                 ...state,
                 cartItems:state.cartItems.filter((item)=> item.id!==action.payload)
             }
+        
+        case ADD_SHIPPING_ADDRESS_TO_CART:
+            return {
+                ...state,
+                shippingAddress:action.payload
+            }
+
+            
          
         default:
             return state
