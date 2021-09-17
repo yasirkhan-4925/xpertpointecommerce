@@ -9,6 +9,8 @@ import LoginScreen from './components/LoginScreen';
 import Register from './components/Register';
 import ProfileScreen from './components/ProfileScreen'
 import ShippingScreen from './components/ShippingScreen'
+import PaymentScreen from './components/PaymentScreen'
+import PlaceOrderScreen from './components/PlaceOrderScreen';
 
 
 
@@ -34,6 +36,8 @@ const  App  = () => {
           <Route path='/register' component={Register} exact />
           <Route path='/profile' component={ProfileScreen} exact />
           <Route path='/shipping' component={ShippingScreen} exact />
+          <Route path='/payment' component={PaymentScreen} exact />
+          <Route path='/placeorder' component={PlaceOrderScreen} exact />
           
           
       

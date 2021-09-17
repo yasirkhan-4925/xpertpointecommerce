@@ -1,5 +1,8 @@
 
-const customErrorHandler = (err,req,res,next) => {
+const customErrorHandler = (err, req, res, next) => {
+    
+
+    // isko server .js me app.use bh krwana hai 
 
     const statusCode = res.statusCode == 200 ? 500 : res.statusCode;
     res.status(statusCode).json({

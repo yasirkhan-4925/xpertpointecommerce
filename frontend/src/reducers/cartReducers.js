@@ -1,4 +1,4 @@
-import { ADD_TO_CART , REMOVE_FROM_CART , ADD_SHIPPING_ADDRESS_TO_CART } from '../types/cartTypes'
+import { ADD_TO_CART , REMOVE_FROM_CART , ADD_SHIPPING_ADDRESS_TO_CART, ADD_PAYMENT_METHOD_TO_CART } from '../types/cartTypes'
 
 
 
@@ -34,6 +34,12 @@ export const cartReducer = (state = { cartItems: [] , shippingAddress:{} }, acti
             return {
                 ...state,
                 shippingAddress:action.payload
+            }
+        
+        case ADD_PAYMENT_METHOD_TO_CART:
+            return {
+                ...state,
+                paymentMethod:action.payload
             }
 
             

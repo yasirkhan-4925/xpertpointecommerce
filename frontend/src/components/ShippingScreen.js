@@ -22,12 +22,13 @@ const ShippingScreen = ({ location, history }) => {
   const { shippingAddress } = cart;
 
   const userLogin = useSelector((state) => state.userLogin.user);
-
-  useEffect(() => {
+ 
+ 
     if (!userLogin) {
-      history.push('/');
+      history.push('/login');
     }
-  }, [userLogin, history]);
+     
+  
 
   return (
     <FormContainer>
