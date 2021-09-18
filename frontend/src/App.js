@@ -11,17 +11,18 @@ import ProfileScreen from './components/ProfileScreen'
 import ShippingScreen from './components/ShippingScreen'
 import PaymentScreen from './components/PaymentScreen'
 import PlaceOrderScreen from './components/PlaceOrderScreen';
+import history from './history';
 
 
 
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import {  Router, Route } from 'react-router-dom'
 
 
 
 
 const  App  = () => {
   return (
-    <Router>
+    <Router history={history}>
     
      
       <Header />

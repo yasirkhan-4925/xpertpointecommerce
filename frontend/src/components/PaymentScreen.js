@@ -50,7 +50,7 @@ const PaymentScreen = ({ history }) => {
                         <Form noValidate onSubmit={handleSubmit}>
                             <Form.Group>
 
-                            <Form.Label as='lagend'>Select Payment Method</Form.Label>
+                            <Form.Label as='legend'>Select Payment Method</Form.Label>
 
                                 <Col>
                                     <Form.Check checked  type='radio' label='paypal or credit card' name='paymentMethod' value='paypal' onChange={handleChange}  >

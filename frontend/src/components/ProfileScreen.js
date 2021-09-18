@@ -31,6 +31,7 @@ const ProfileScreen = ({ history , location}) => {
     const formRef = useRef();
     const dispatch = useDispatch();
     const userIsLogin = useSelector(state => state.userLogin.user)
+
     const { user, error, loading } = useSelector(state => state.userDetails)
     const {success} = useSelector(state => state.updateUserProfile)
     
@@ -45,7 +46,7 @@ const ProfileScreen = ({ history , location}) => {
             history.push('/login')
         }
         else {
-            if (!user.name) {
+            if (!user.name && user) {
 
                 dispatch(getUserDetails())
               
@@ -76,6 +77,7 @@ const ProfileScreen = ({ history , location}) => {
                 
                 <Col sm={12} md={4}>
                         <h2>My Profile</h2>
+                        { console.log(error)}
                         {success && <AlertDisplay variant='success' error={'Profile Updated '} />}
                     {error && <AlertDisplay variant='danger' error={error} />}
                     {loading ? <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> : <Formik  innerRef={formRef}  validationSchema={schema} initialValues={{

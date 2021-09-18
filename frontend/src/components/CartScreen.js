@@ -60,14 +60,14 @@ const CartScreen = ({ match, location, history }) => {
                 {cartItems.length === 0 ? <AlertDisplay variant='warning' error={'Your cart is empty'} /> : (
                     <ListGroup>
 
-                        { cartItems.map( (item) => (<ListGroup.Item className=''>
-                            <Row>
+                        {cartItems.map((item, index) => (<ListGroup.Item key={ index} >
+                            <Row >
                                 <Col md={2} sm={ 6} xs={6}>
                                     <Image src={ item.image}  rounded fluid/>
                                 </Col>
 
                                 <Col md={3} sm={3} xs={3}>
-                                    <Link style={{ textDecoration: 'none', color: 'black' }}>{ item.name}</Link>
+                                    <Link to={`product/${item.id}`} style={{ textDecoration: 'none', color: 'black' }}>{ item.name}</Link>
                                 </Col>
                                 <Col md={2} sm={3} xs={3}>
                                     {`Rs ${item.price}`}

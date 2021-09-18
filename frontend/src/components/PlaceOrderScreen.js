@@ -7,6 +7,7 @@ import {
   Card,
   ListGroup,
   ListGroupItem,
+  Spinner
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import AlertDisplay from './AlertDisplay';
@@ -18,7 +19,7 @@ const PlaceOrderScreen = ({ history }) => {
     const cart = useSelector((state) => state.cart);
     const orderCreate = useSelector(state => state.orderCreate)
 
-    const {order , error, success} = orderCreate
+    const {order , error, success , loading} = orderCreate
   const userLogin = useSelector((state) => state.userLogin.user);
   const dispatch = useDispatch();
 
@@ -52,7 +53,10 @@ const PlaceOrderScreen = ({ history }) => {
        }, [history, success])
   return (
     <>
+      
       <CheckoutStep step1 step2 step3 step4 />
+
+      {loading && <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> }
 
       <Row>
         <Col md={8}>

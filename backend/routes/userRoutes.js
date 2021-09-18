@@ -136,6 +136,15 @@ router.put('/profile', protect, asyncHandler(async (req, res) => {
     
     const user = await User.findById(req.user._id)
 
+    const duplicateUser = await User.findOne({email:req.body.email})
+    if (duplicateUser) {
+        if (user.email === req.body.email) {
+            throw new Error('Email Already Updated')
+        } else {
+            throw new Error ('Email is already taken by another user')
+        }
+      
+   }
     if (user) {
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email

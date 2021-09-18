@@ -5,12 +5,16 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../Actions/userActions'
 import AlertDisplay from './AlertDisplay'
+import { withRouter } from 'react-router-dom'
+import { Redirect } from 'react-router'
+import history from '../history'
 
 
 
 
 
-const LoginScreen = ({location , history})=>{
+
+const LoginScreen = ({location  })=>{
   
 
   
@@ -18,23 +22,42 @@ const LoginScreen = ({location , history})=>{
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
    
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+   
+   
     const dispatch = useDispatch()
     // const userRegister = useSelector(state => state.userRegister)
     // const { user, loading, error } = userRegister
     const userLogin = useSelector(state => state.userLogin)
-    const { user,error,loading} = userLogin
-    
+    const { user, error, loading } = userLogin
+    const  redirect = location.search ? location.search.split('=')[1] : '/'
      
+    
+  
+
 
     useEffect(() => {
+        console.log(`redirect = ${redirect}`)
+       
+       
+
+           
+        
         if (user) {
-            
-            history.push(redirect)
+            if (redirect === '/') {
+                history.push('/')
+            }
+            else if (redirect === 'shipping') {
+                history.push('/shipping')
+            } else {
+                history.push('/')
+            }
+         
+    
+        }
           
            
-        }
-    },[ history , redirect,  user])
+        
+    },[ user , history ,  redirect])
       
    
 
@@ -47,7 +70,9 @@ const LoginScreen = ({location , history})=>{
     }
 
 
-    return(
+    return (
+        <>
+           
         <FormContainer>
             <h1>Sign In</h1>
             {error && <AlertDisplay variant='danger' error={error} />}
@@ -80,8 +105,9 @@ const LoginScreen = ({location , history})=>{
                     Dont Have An Account  ? <Link style={{color:'black'}} to={redirect ? `/register?redirect=${redirect} ` : '/register'}>Register Here</Link>
             </Col>
             </Row>
-        </FormContainer>
+            </FormContainer>
+            </>
     )
 }
 
-export default LoginScreen
+export default withRouter(LoginScreen)

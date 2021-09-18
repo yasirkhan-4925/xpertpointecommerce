@@ -36,7 +36,8 @@ export const logout = () => {
 
          localStorage.removeItem('user')
          getState().userDetails.user = {}
-         getState().updateUserProfile={}
+         getState().updateUserProfile = {}
+         getState().orderCreate = {}
          
          
          dispatch({ type: USER_LOGOUT })

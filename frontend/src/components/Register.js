@@ -10,6 +10,7 @@ import AlertDisplay from './AlertDisplay'
 import { Formik,  } from 'formik'
 import * as Yup from 'yup'
 import { register } from '../Actions/userActions'
+import {withRouter} from 'react-router-dom'
 
 
 const schema = Yup.object({
@@ -27,17 +28,44 @@ const Register = ({location , history}) => {
     const dispatch = useDispatch()
     const userRegister = useSelector(state => state.userRegister)
     const {  loading, error } = userRegister
-    const userLogin = useSelector(state => state.userLogin.user)
+   
+
+    const userLogin = useSelector(state => state.userLogin)
+    const { user} = userLogin
+     
+
     
+
      
 
     useEffect(() => {
-        if (userLogin) {
-            history.push(redirect)
+        // if (userLogin) {
+        //         console.log(`register redirect ${redirect}`)
           
+        //         history.push(redirect)
+              
            
+           
+        if (user) {
+           
+            console.log(`redirect = ${redirect}`)
+            if (redirect === '/') {
+                history.push('/')
+            }
+            else if(redirect === 'shipping') {
+                history.push('/shipping')
+            } else {
+                history.push('/')
+            }
+         
+    
         }
-    },[ history , redirect,  userLogin])
+
+
+        
+
+       
+    },[user , history , redirect])
 
     return (
 
@@ -129,4 +157,4 @@ const Register = ({location , history}) => {
 }
 
 
-export default Register;
+export default withRouter(Register) ;
