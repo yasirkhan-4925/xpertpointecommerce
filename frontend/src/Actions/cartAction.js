@@ -61,3 +61,14 @@ export const addPaymentMethod = (data) => {
   
 
 }
+
+
+export const resetCart = () => {
+    
+    return (dispatch, getState) => {
+
+        dispatch({ type: 'RESET_CART_ITEMS' })
+        localStorage.removeItem('cartItems')
+        
+    }
+}

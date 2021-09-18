@@ -12,6 +12,7 @@ import ShippingScreen from './components/ShippingScreen'
 import PaymentScreen from './components/PaymentScreen'
 import PlaceOrderScreen from './components/PlaceOrderScreen';
 import history from './history';
+import OrderScreen from './components/OrderScreen';
 
 
 
@@ -39,6 +40,7 @@ const  App  = () => {
           <Route path='/shipping' component={ShippingScreen} exact />
           <Route path='/payment' component={PaymentScreen} exact />
           <Route path='/placeorder' component={PlaceOrderScreen} exact />
+          <Route path='/order/:id' component={OrderScreen} exact />
           
           
       
