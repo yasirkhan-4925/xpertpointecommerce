@@ -5,6 +5,8 @@ import { useDispatch} from 'react-redux'
 import { unstable_batchedUpdates } from 'react-dom';
 import { resetCreatedOrder } from './Actions/orderActions';
 import { resetCart } from './Actions/cartAction';
+import { getAllOrders } from './Actions/orderActions';
+
 
  const  MyApp = (props) => {
        
@@ -14,7 +16,8 @@ import { resetCart } from './Actions/cartAction';
             dispatch(payOrder(props.id, payment))
             dispatch(resetCart())
             dispatch(resetCreatedOrder())
-            console.log("The payment was succeeded!", payment);
+            dispatch(getAllOrders())
+            
            
         
             // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data

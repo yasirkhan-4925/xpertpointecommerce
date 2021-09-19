@@ -2,7 +2,8 @@ import express from 'express'
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken'
-import { protect  } from '../middleware/authMiddleware.js';
+import { protect } from '../middleware/authMiddleware.js';
+import Order from '../models/orderModel.js';
 
 
 const router = express.Router();
@@ -174,5 +175,16 @@ router.put('/profile', protect, asyncHandler(async (req, res) => {
 }))
 
 
+// @desc get my orders
+// @route put /api/users/myorders
+// @access private
+
+
+
+
+router.get('/myorders', protect ,asyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id })
+    res.json(orders)
+}))
 
 export default router;

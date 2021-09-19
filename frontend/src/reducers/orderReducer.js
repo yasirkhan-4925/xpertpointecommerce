@@ -1,4 +1,4 @@
-import { ORDER_CREATE_ERROR, ORDER_CREATE_SUCCESS, ORDER_CREATE_REQUEST , ORDER_DETAILS_ERROR ,ORDER_DETAILS_SUCCESS ,ORDER_DETAILS_REQUEST , ORDER_PAY_ERROR ,ORDER_PAY_SUCCESS , ORDER_PAY_REQUEST , ORDER_PAY_RESET } from '../types/orderTypes.js'
+import {GET_MY_ORDERS_ERROR , GET_MY_ORDERS_REQUEST , GET_MY_ORDERS_SUCCESS , ORDER_CREATE_ERROR, ORDER_CREATE_SUCCESS, ORDER_CREATE_REQUEST , ORDER_DETAILS_ERROR ,ORDER_DETAILS_SUCCESS ,ORDER_DETAILS_REQUEST , ORDER_PAY_ERROR ,ORDER_PAY_SUCCESS , ORDER_PAY_REQUEST , ORDER_PAY_RESET } from '../types/orderTypes.js'
 
 
 
@@ -80,6 +80,33 @@ export const orderPayReducer = (state={}, action) => {
             }
         case ORDER_PAY_RESET:
             return {}
+        default:
+            return state
+    }
+    
+}
+
+
+export const getMyOrdersReducer = (state={myOrders:[]}, action) => {
+
+
+    switch(action.type){
+        case GET_MY_ORDERS_REQUEST:
+            return {
+                loading:true
+            }
+        case GET_MY_ORDERS_SUCCESS: 
+            return {
+                loading:false,
+                myOrders:action.payload
+            }
+        
+        case GET_MY_ORDERS_ERROR:
+            return{
+                loading: false,
+                error:action.payload
+            }
+        
         default:
             return state
     }

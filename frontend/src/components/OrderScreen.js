@@ -229,7 +229,7 @@ const OrderScreen = ({ match, history }) => {
                 </Button>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    { !order.isPaid &&  <PaypalButton id={match.params.id} history={history} total={order.totalPrice }/> }
+                    { !order.isPaid && order.paymentMethod !== 'cash on delivery' && <PaypalButton id={match.params.id} history={history} total={order.totalPrice }/> }
                  
                   </ListGroup.Item>
                  
