@@ -30,6 +30,7 @@ router.post('/', protect , asyncHandler(async (req,res) => {
         })
     
         const createdOrder = await order.save()
+    
 
        res.status(201).json(createdOrder)
         
@@ -75,14 +76,15 @@ router.put('/:id/pay', protect, asyncHandler(async (req , res) => {
         // this comes from paypal
         order.paymentResult = {
 
-            id: req.body.id,
-            status: req.body.status,
-            update_time: req.body.update_time,
-            email_address: req.body.payer.email_address
+            id: req.body.payerId,
+            status: req.body.paid,
+           
+            email_address: req.body.email
 
         }
 
         const updatedOrder = await order.save();
+        console.log(updatedOrder)
         res.json(updatedOrder)
 
     } else {

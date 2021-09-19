@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Row,
@@ -9,49 +9,61 @@ import {
   ListGroupItem,
   Spinner,
 } from 'react-bootstrap';
+import moment from 'moment'
+import PaypalButton from '../PayPalButton.js'
+import { PayPalButton } from 'react-paypal-button-v2';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { ORDER_CREATE_ERROR, ORDER_PAY_RESET } from '../types/orderTypes';
 
 import { getOrderDetails, resetCreatedOrder } from '../Actions/orderActions';
-import { resetCart } from '../Actions/cartAction';
+import { addPaymentMethod, resetCart } from '../Actions/cartAction';
+
 
 import AlertDisplay from './AlertDisplay';
 
 const OrderScreen = ({ match, history }) => {
+  const [sdkReady, setsdkReady] = useState('false');
+
   const dispatch = useDispatch();
-    const orderDetails = useSelector((state) => state.orderDetails);
-    const userLogin = useSelector((state) => state.userLogin.user);
-    const { error, loading, order } = orderDetails;
- 
- 
-    if (!userLogin) {
-      history.push('/login');
-    }
-     
-  
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const userLogin = useSelector((state) => state.userLogin.user);
+  const { error, loading, order } = orderDetails;
+
+  const orderPay = useSelector(state => state.orderPay)
+
+  const { success:successPay } = orderPay
     
 
-    
-    
+
+ 
+
+  if (!userLogin) {
+    history.push('/login');
+  }
+
   useEffect(() => {
+
+    if (successPay) {
+      dispatch({type:ORDER_CREATE_ERROR})
+      dispatch(getOrderDetails(match.params.id));
+    }
     dispatch(getOrderDetails(match.params.id));
-  }, [dispatch, match.params.id]);
     
+  }, [dispatch, match.params.id ,successPay  ]);
 
-    const backToHomeHandler = () => {
-           
-        history.push('/')
-        dispatch(resetCreatedOrder())
-        dispatch(resetCart())
-    
-        
+  const backToHomeHandler = () => {
+    history.push('/');
+    dispatch(resetCreatedOrder());
+    dispatch(resetCart());
+  };
 
-    }
+  if (!userLogin) {
+    history.push('/login');
+  }
 
-    if (!userLogin) {
-        history.push('/login')
-    }
-
+  
   return (
     <>
       {loading ? (
@@ -69,29 +81,43 @@ const OrderScreen = ({ match, history }) => {
         <AlertDisplay variant='danger' error={error} />
       ) : (
         <Row>
-                          <Col md={8}>
-                              <h4>Order {order._id}</h4>
-                              <ListGroup variant='flush'>
-                                  
+          <Col md={8}>
+            <h4>Order {order._id}</h4>
+            <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h5>Shipping Address</h5>
                 <p>
                   <strong>Address: </strong>
-                  {order.shippingAddress.address} , {order.shippingAddress.city} ,{' '}
-                  {order.shippingAddress.postalCode} ,{' '}
+                  {order.shippingAddress.address} , {order.shippingAddress.city}{' '}
+                  , {order.shippingAddress.postalCode} ,{' '}
                   {order.shippingAddress.country}
                 </p>
-                                  </ListGroup.Item>
-                                  
+              </ListGroup.Item>
 
-                                  { order.isDelivered ?  <AlertDisplay variant='success' error={`Delivered on ${order.deliveredAt}`} />  :  <AlertDisplay variant='danger' error='Not Delivered' />  }
+              {order.isDelivered ? (
+                <AlertDisplay
+                  variant='success'
+                  error={`Delivered on ${order.deliveredAt}`}
+                />
+              ) : (
+                <AlertDisplay variant='danger' error='Not Delivered' />
+              )}
 
               <ListGroup.Item>
                 <h5>Payment Method</h5>
                 <strong> Method: {order.paymentMethod} </strong>
               </ListGroup.Item>
 
-              { order.isPaid && order.paymentMethod === 'paypal' ?  <AlertDisplay variant='success' error={`Paid at  ${order.paidAt}`} />  : !order.isPaid && order.paymentMethod === 'paypal' ?  <AlertDisplay variant='danger' error='Not Paid' /> : '' }
+              {order.isPaid && order.paymentMethod === 'paypal' ? (
+                <AlertDisplay
+                  variant='success'
+                  error={`Paid at  ${moment(order.paidAt).format('MMMM Do YYYY, h:mm:ss a')}`}
+                />
+              ) : !order.isPaid && order.paymentMethod === 'paypal' ? (
+                <AlertDisplay variant='danger' error='Not Paid' />
+              ) : (
+                ''
+              )}
 
               <ListGroup.Item>
                 <h5>Order Items</h5>
@@ -123,9 +149,13 @@ const OrderScreen = ({ match, history }) => {
                             </Link>
                           </Col>
 
-                          <Col md={4}> <p> {item.quantity} x Rs{item.price} = Rs
-                            {item.quantity * item.price}</p>
-                           
+                          <Col md={4}>
+                            {' '}
+                            <p>
+                              {' '}
+                              {item.quantity} x Rs{item.price} = Rs
+                              {item.quantity * item.price}
+                            </p>
                           </Col>
                         </Row>
                       </ListGroup.Item>
@@ -161,20 +191,48 @@ const OrderScreen = ({ match, history }) => {
                   <Col>Rs {order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-
+              {/* {!order.isPaid && (
+                <ListGroup.Item>
+                  {loadingPay && (
+                    <Spinner
+                      className='spinner'
+                      style={{
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        marginTop: '120px',
+                      }}
+                      animation='border'
+                    />
+                      )}
+                      { !sdkReady ? ( <Spinner
+                      className='spinner'
+                      style={{
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        marginTop: '120px',
+                      }}
+                      animation='border'
+                      />) : <PaypalButton history={history} amount={order.totalPrice }/>  }
+                </ListGroup.Item>
+              )} */}
               <ListGroup.Item>
-                                      <Button
-                                          onClick={backToHomeHandler}
+                <Button
+                  onClick={backToHomeHandler}
                   style={{ width: '100%' }}
-                 
                   className=' btn-block'
-                  
                   type='button'
                   variant='dark'
                 >
                   Back To Home
                 </Button>
-              </ListGroup.Item>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    { !order.isPaid &&  <PaypalButton id={match.params.id} history={history} total={order.totalPrice }/> }
+                 
+                  </ListGroup.Item>
+                 
             </ListGroup>
           </Col>
         </Row>
