@@ -33,9 +33,9 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className=' nav'>
-              
 
-              {user ? <NavDropdown title={user.name} id='username'>
+           
+            {user ? <NavDropdown title={user.name} id='username'>
              
              <NavDropdown.Item ><Link className='profileLink' to='/profile' style={{textDecoration:'none' , color:'grey'}}>Profile</Link></NavDropdown.Item> 
                <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
@@ -46,6 +46,8 @@ const Header = () => {
                 <i class='fas fa-user'></i> Sign In
               </Nav.Link></LinkContainer> }
 
+             
+
 
               <LinkContainer to='/cart'>
               <Nav.Link >
@@ -53,6 +55,17 @@ const Header = () => {
                 <i class='fas fa-shopping-cart'></i> Cart
               </Nav.Link>
               </LinkContainer>
+
+
+              {user && user.isAdmin && (
+                <LinkContainer to='/admin/userslist'>
+                <Nav.Link >
+                   Users List
+                </Nav.Link>
+                </LinkContainer>
+              )}
+
+
              
              
              

@@ -13,6 +13,7 @@ import PaymentScreen from './components/PaymentScreen'
 import PlaceOrderScreen from './components/PlaceOrderScreen';
 import history from './history';
 import OrderScreen from './components/OrderScreen';
+import UserList from './components/UserList';
 
 
 
@@ -41,7 +42,7 @@ const  App  = () => {
           <Route path='/payment' component={PaymentScreen} exact />
           <Route path='/placeorder' component={PlaceOrderScreen} exact />
           <Route path='/order/:id' component={OrderScreen} exact />
-          
+          <Route path='/admin/userslist' component={UserList} exact />
           
       
        

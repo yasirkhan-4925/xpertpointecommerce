@@ -27,12 +27,25 @@ const protect = async (req, res, next) => {
     if (!token) {
         res.status(401)
         throw new Error('Not Authorized , No Token')
+        next();
     }
    
 
 
 }
 
-export { protect}
+const isAdmin =  (req, res, next) => {
+    if (req.user && req.user.isAdmin)
+    {
+        next()
+    }
+    else {
+        res.status(401)
+        throw new Error('not authorize as an admin')
+    }
+          
+}
+
+export { protect , isAdmin}
 
 

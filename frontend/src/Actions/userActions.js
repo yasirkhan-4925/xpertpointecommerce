@@ -1,5 +1,7 @@
-import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_ERROR, USER_LOGOUT , CLEAR_REGISTER_USER, USER_REGISTER_ERROR ,USER_REGISTER_SUCCESS , USER_REGISTER_REQUEST ,USER_DETAILS_ERROR , USER_DETAILS_REQUEST , USER_DETAILS_SUCCESS ,USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from '../types/userTypes.js'
+import { USER_DELETE_ERROR ,USER_DELETE_REQUEST,USER_DELETE_SUCCESS, USER_LIST_ERROR ,USER_LIST_REQUEST , USER_LIST_SUCCESS , USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_ERROR, USER_LOGOUT , CLEAR_REGISTER_USER, USER_REGISTER_ERROR ,USER_REGISTER_SUCCESS , USER_REGISTER_REQUEST ,USER_DETAILS_ERROR , USER_DETAILS_REQUEST , USER_DETAILS_SUCCESS ,USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from '../types/userTypes.js'
 import axios from 'axios'
+
+
 
 export const login = (email, password) => {
     return async (dispatch) => {
@@ -163,3 +165,89 @@ export const updateProfile = (user) => {
 }
 
 
+
+
+
+
+
+export const usersList = () => {
+    
+    return async (dispatch , getState) => {
+        
+        try {
+            
+            dispatch({ type: USER_LIST_REQUEST })
+
+        const config = {
+            headers: {
+                
+                Authorization:`Bearer ${getState().userLogin.user.token}`
+                
+            }
+        }
+
+        const { data } = await axios.get('/api/users', config  )
+          
+        dispatch({ type:USER_LIST_SUCCESS , payload:data})
+        }
+        catch (error) {
+            dispatch({
+                type: USER_LIST_ERROR,
+                payload:error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        }
+        
+
+        
+
+          
+     }
+
+
+
+}
+
+
+
+
+
+export const deleteUser = (id) => {
+    
+    return async (dispatch , getState) => {
+        
+        try {
+            
+            dispatch({ type: USER_DELETE_REQUEST })
+
+        const config = {
+            headers: {
+                
+                Authorization:`Bearer ${getState().userLogin.user.token}`
+                
+            }
+        }
+
+         await axios.delete(`/api/users/${id}`, config  )
+          
+            dispatch({ type: USER_DELETE_SUCCESS })
+            dispatch(usersList())
+
+            setTimeout(function () { dispatch({type:'USER_DELETE_RESET'}) }, 3000);
+           
+        }
+        catch (error) {
+            dispatch({
+                type: USER_DELETE_ERROR,
+                payload:error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        }
+        
+
+        
+
+          
+     }
+
+
+
+}

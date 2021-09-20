@@ -2,7 +2,7 @@ import express from 'express'
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken'
-import { protect } from '../middleware/authMiddleware.js';
+import { protect , isAdmin } from '../middleware/authMiddleware.js';
 import Order from '../models/orderModel.js';
 
 
@@ -186,5 +186,43 @@ router.get('/myorders', protect ,asyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id })
     res.json(orders)
 }))
+
+
+// @desc get users list
+// @route get /api/users/
+// @access private  and admin
+
+
+router.get('/', protect , isAdmin, asyncHandler(async (req, res ) => {
+    
+    const users = await User.find({})
+    res.json(users)
+
+}))
+
+
+
+
+// @desc delete user
+// @route delete /api/users/:id
+// @access private and admin
+
+
+router.delete('/:id', protect, isAdmin, asyncHandler(async (req, res) => {
+       
+    const user = await User.findById(req.params.id)
+    if (user) {
+        await user.remove()
+        res.json({message:'user removed'})
+    }
+    else {
+        res.status(404)
+        throw new Error('user not found')
+    }
+
+
+}))
+
+
 
 export default router;
