@@ -1,4 +1,4 @@
-import { USER_DELETE_ERROR ,USER_DELETE_REQUEST,USER_DELETE_SUCCESS, USER_LIST_ERROR ,USER_LIST_REQUEST , USER_LIST_SUCCESS , USER_LOGIN_REQUEST , USER_LOGIN_SUCCESS , USER_LOGIN_ERROR , USER_LOGOUT , USER_REGISTER_ERROR , CLEAR_REGISTER_USER , USER_REGISTER_SUCCESS , USER_REGISTER_REQUEST , USER_DETAILS_ERROR , USER_DETAILS_REQUEST , USER_DETAILS_SUCCESS, USER_UPDATE_PROFILE_ERROR , USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS} from '../types/userTypes.js'
+import { SINGLE_USER_EDIT_RESET , SINGLE_USER_EDIT_ERROR , SINGLE_USER_EDIT_SUCCESS , SINGLE_USER_EDIT_REQUEST , SINGLE_USER_DETAIL_ERROR , SINGLE_USER_DETAIL_SUCCESS , SINGLE_USER_DETAIL_REQUEST , USER_DELETE_ERROR ,USER_DELETE_REQUEST,USER_DELETE_SUCCESS, USER_LIST_ERROR ,USER_LIST_REQUEST , USER_LIST_SUCCESS , USER_LOGIN_REQUEST , USER_LOGIN_SUCCESS , USER_LOGIN_ERROR , USER_LOGOUT , USER_REGISTER_ERROR , CLEAR_REGISTER_USER , USER_REGISTER_SUCCESS , USER_REGISTER_REQUEST , USER_DETAILS_ERROR , USER_DETAILS_REQUEST , USER_DETAILS_SUCCESS, USER_UPDATE_PROFILE_ERROR , USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS} from '../types/userTypes.js'
 
 export const userLoginReducer = (state = {}, action) => {
     
@@ -174,3 +174,64 @@ export const userDeleteReducer = (state={} , action) => {
     }
 
 }
+
+
+
+
+
+export const singleUserDetailReducer = (state = { singleUser: {},  },action) => 
+{
+    
+    switch (action.type) {
+        case SINGLE_USER_DETAIL_REQUEST:
+            return { ...state, loading: true }
+        case SINGLE_USER_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                singleUser:action.payload
+            }
+        case SINGLE_USER_DETAIL_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+                
+            }
+        default:
+            return state
+    }
+    
+      
+}
+
+
+
+
+
+export const singleUserEditReducer = (state = {   },action) => 
+{
+    
+    switch (action.type) {
+        case SINGLE_USER_EDIT_REQUEST:
+            return { ...state, loading: true }
+        case SINGLE_USER_EDIT_SUCCESS:
+            return {
+                loading: false,
+                success:true
+            }
+        case SINGLE_USER_EDIT_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+                
+            }
+        case SINGLE_USER_EDIT_RESET:
+            return {}
+        default:
+            return state
+    }
+    
+      
+}
+

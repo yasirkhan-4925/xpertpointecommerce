@@ -1,4 +1,4 @@
-import { USER_DELETE_ERROR ,USER_DELETE_REQUEST,USER_DELETE_SUCCESS, USER_LIST_ERROR ,USER_LIST_REQUEST , USER_LIST_SUCCESS , USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_ERROR, USER_LOGOUT , CLEAR_REGISTER_USER, USER_REGISTER_ERROR ,USER_REGISTER_SUCCESS , USER_REGISTER_REQUEST ,USER_DETAILS_ERROR , USER_DETAILS_REQUEST , USER_DETAILS_SUCCESS ,USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from '../types/userTypes.js'
+import {  SINGLE_USER_DETAIL_ERROR , SINGLE_USER_DETAIL_SUCCESS , SINGLE_USER_DETAIL_REQUEST ,USER_DELETE_ERROR ,USER_DELETE_REQUEST,USER_DELETE_SUCCESS, USER_LIST_ERROR ,USER_LIST_REQUEST , USER_LIST_SUCCESS , USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_ERROR, USER_LOGOUT , CLEAR_REGISTER_USER, USER_REGISTER_ERROR ,USER_REGISTER_SUCCESS , USER_REGISTER_REQUEST ,USER_DETAILS_ERROR , USER_DETAILS_REQUEST , USER_DETAILS_SUCCESS ,USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS, SINGLE_USER_EDIT_REQUEST, SINGLE_USER_EDIT_SUCCESS, SINGLE_USER_EDIT_ERROR, SINGLE_USER_EDIT_RESET } from '../types/userTypes.js'
 import axios from 'axios'
 
 
@@ -248,6 +248,87 @@ export const deleteUser = (id) => {
           
      }
 
+
+
+}
+
+export const singleUserDetails = (id) => {
+    
+    return async (dispatch , getState) => {
+        
+        try {
+            
+            dispatch({ type:SINGLE_USER_DETAIL_REQUEST })
+
+        const config = {
+            headers: {
+                
+                Authorization:`Bearer ${getState().userLogin.user.token}`
+                
+            }
+        }
+
+        const { data } = await axios.get(`/api/users/${id}`, config  )
+          
+        dispatch({ type:SINGLE_USER_DETAIL_SUCCESS , payload:data})
+        }
+        catch (error) {
+            dispatch({
+                type: SINGLE_USER_DETAIL_ERROR,
+                payload:error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        }
+        
+
+        
+
+          
+     }
+
+
+
+}
+
+
+
+export const singleUserUpdate = ( id ,  user) => {
+    
+    return async (dispatch,getState) => {
+        try {
+             dispatch({type:SINGLE_USER_EDIT_REQUEST})
+
+             const config = {
+                headers: {
+                    'Content-Type':'application/json', 
+                    Authorization:`Bearer ${getState().userLogin.user.token}`
+                    
+                }
+            }
+            
+            const { data } = await axios.put(`/api/users/${id}`, user ,config  )
+        
+            dispatch({ type: SINGLE_USER_EDIT_SUCCESS, payload: data })
+            dispatch(singleUserDetails(id));
+            dispatch({ type: SINGLE_USER_EDIT_RESET })
+           
+            
+            
+            
+
+           
+              
+          
+        }
+        
+
+         
+        catch (error) {
+            dispatch({
+                type: SINGLE_USER_EDIT_ERROR,
+                payload:error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+          }
+     }
 
 
 }

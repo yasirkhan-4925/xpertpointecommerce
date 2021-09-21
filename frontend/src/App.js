@@ -14,6 +14,7 @@ import PlaceOrderScreen from './components/PlaceOrderScreen';
 import history from './history';
 import OrderScreen from './components/OrderScreen';
 import UserList from './components/UserList';
+import UserEdit from './components/UserEdit'
 
 
 
@@ -43,6 +44,7 @@ const  App  = () => {
           <Route path='/placeorder' component={PlaceOrderScreen} exact />
           <Route path='/order/:id' component={OrderScreen} exact />
           <Route path='/admin/userslist' component={UserList} exact />
+          <Route path='/user/:id/edit' component={UserEdit} exact />
           
       
        

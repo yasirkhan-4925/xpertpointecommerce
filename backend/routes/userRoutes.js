@@ -137,15 +137,9 @@ router.put('/profile', protect, asyncHandler(async (req, res) => {
     
     const user = await User.findById(req.user._id)
 
-    const duplicateUser = await User.findOne({email:req.body.email})
-    if (duplicateUser) {
-        if (user.email === req.body.email) {
-            throw new Error('Email Already Updated')
-        } else {
-            throw new Error ('Email is already taken by another user')
-        }
+    
       
-   }
+   
     if (user) {
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email
@@ -220,6 +214,63 @@ router.delete('/:id', protect, isAdmin, asyncHandler(async (req, res) => {
         throw new Error('user not found')
     }
 
+
+}))
+
+
+
+// @desc get user by id
+// @route get /api/users/:id
+// @access private and admin
+
+
+router.get('/:id' , protect , isAdmin , asyncHandler(async(req , res)=>{
+  
+     const user = await User.findById(req.params.id).select('-password')
+
+    if (user) {
+        res.json(user)
+    } else {
+        throw new Error('user not found')
+    }
+
+   
+
+}) )
+
+
+// @desc update user
+// @route put /api/users/:id
+// @access private and admin
+
+
+router.put('/:id',  protect, isAdmin ,  asyncHandler(async (req, res) => {
+    
+    const user = await User.findById(req.params.id)
+
+   
+   
+    if (user) {
+        user.name = req.body.name || user.name
+        user.email = req.body.email || user.email
+        user.isAdmin = req.body.isAdmin
+        const updatedUser = await user.save();
+       
+    
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        
+        })
+    } else {
+        res.status(404);
+        throw new Error('User not found')
+    }
+
+   
+  
 
 }))
 
