@@ -65,6 +65,14 @@ const Header = () => {
                 </LinkContainer>
               )}
 
+{user && user.isAdmin && (
+                <LinkContainer to='/admin/productslist'>
+                <Nav.Link >
+                   Products List
+                </Nav.Link>
+                </LinkContainer>
+              )}
+
 
              
              

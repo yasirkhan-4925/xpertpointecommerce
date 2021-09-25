@@ -15,6 +15,7 @@ import history from './history';
 import OrderScreen from './components/OrderScreen';
 import UserList from './components/UserList';
 import UserEdit from './components/UserEdit'
+import ProductsList from './components/ProductsList';
 
 
 
@@ -45,6 +46,7 @@ const  App  = () => {
           <Route path='/order/:id' component={OrderScreen} exact />
           <Route path='/admin/userslist' component={UserList} exact />
           <Route path='/user/:id/edit' component={UserEdit} exact />
+          <Route path='/admin/productslist' component={ProductsList} exact />
           
       
        

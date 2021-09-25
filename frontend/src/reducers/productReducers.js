@@ -1,4 +1,4 @@
-import { PRODUCTLIST_ERROR , PRODUCTLIST_SUCCESS , PRODUCTLIST_REQUEST , PRODUCTDETAILS_ERROR , PRODUCTDETAILS_REQUEST, PRODUCTDETAILS_SUCCESS } from '../types/productTypes.js'
+import { PRODUCT_DELETE_ERROR , PRODUCT_DELETE_REQUEST , PRODUCT_DELETE_SUCCESS, PRODUCTLIST_ERROR , PRODUCTLIST_SUCCESS , PRODUCTLIST_REQUEST , PRODUCTDETAILS_ERROR , PRODUCTDETAILS_REQUEST, PRODUCTDETAILS_SUCCESS } from '../types/productTypes.js'
 
 
 
@@ -54,4 +54,30 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
     
 
 
+}
+
+
+export const productDeleteReducer = (state={}, action) => {
+    switch (action.type) {
+
+        case PRODUCT_DELETE_REQUEST:
+            return {
+                loading:true
+            }
+        case PRODUCT_DELETE_SUCCESS:
+            return {
+                loading: false,
+                success:true
+            }
+        case PRODUCT_DELETE_ERROR:
+            return {
+                loading: false,
+                error:action.payload
+            }
+        case 'PRODUCT_DELETE_RESET':
+            return {}
+        default:
+            return state
+
+     }
 }

@@ -5,8 +5,10 @@ import {
   PRODUCTDETAILS_ERROR,
   PRODUCTDETAILS_REQUEST,
   PRODUCTDETAILS_SUCCESS,
+  PRODUCT_DELETE_ERROR , PRODUCT_DELETE_REQUEST , PRODUCT_DELETE_SUCCESS
 } from '../types/productTypes.js';
 import axios from 'axios';
+
 
 export const listProduct = () => {
   return async (dispatch) => {
@@ -36,6 +38,40 @@ export const productDetails = (id) => {
     } catch (error) {
       dispatch({
         type: PRODUCTDETAILS_ERROR,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+
+
+export const deleteProduct = (id) => {
+  return async (dispatch,getState) => {
+    try {
+    
+      dispatch({ type: PRODUCT_DELETE_REQUEST });
+      const config = {
+        headers: {
+        
+            Authorization:`Bearer ${getState().userLogin.user.token}`
+            
+        }
+    }
+     await axios.delete(`/api/products/${id}`, config);
+      
+      dispatch({ type: PRODUCT_DELETE_SUCCESS });
+
+      dispatch(listProduct())
+
+      setTimeout(function () { dispatch({type:'PRODUCT_DELETE_RESET'}) }, 3000);
+
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_DELETE_ERROR,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

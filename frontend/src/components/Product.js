@@ -1,12 +1,16 @@
 import React from 'react'
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button ,Row , Col  } from 'react-bootstrap'
 import Rating from './Rating'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useSelector ,useDispatch } from 'react-redux'
 
 
-const Product = ({product}) => {
+
+const Product = ({product , history }) => {
+     
+    const userLogin = useSelector(state => state.userLogin.user)
     
-
+   
     return (
          <>
             <Card  border='dark' variant='top'className='my-1 p-2 rounded' >
@@ -26,7 +30,9 @@ const Product = ({product}) => {
                     
                     
                    
-                 </Card.Body>
+                </Card.Body>
+                
+              
 
                </Card>
 

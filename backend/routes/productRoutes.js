@@ -1,6 +1,7 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import Product from '../models/productModel.js';
+import { protect , isAdmin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -34,5 +35,24 @@ router.get(
     }
   })
 );
+
+// @desc: delete product
+// @route: /api/products/:id
+// @acess: private and admin
+
+
+router.delete('/:id' , protect , isAdmin , asyncHandler( async (req , res)=>{
+
+  const product = await Product.findById(req.params.id)
+  if (product) {
+    await product.remove()
+    res.json({msg:'product removed'})
+  }
+  else {
+    res.status(404)
+    throw new Erro('product not found')
+  }
+
+}))
 
 export default router;
