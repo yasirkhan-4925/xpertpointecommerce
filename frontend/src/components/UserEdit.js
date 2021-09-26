@@ -72,7 +72,7 @@ const UserEdit = ({ history , match}) => {
       </Link>
                  <h1>Edit User</h1>
                  
-                 <Formik  innerRef={formRef} validationSchema={schema} validateOnChange={false} validateOnChange={false} initialValues={{
+                 <Formik  innerRef={formRef} validationSchema={schema} validateOnChange={false}  initialValues={{
                      name: '',
                      email: '',
                      isAdmin:false
