@@ -12,11 +12,11 @@ import {
 import AlertDisplay from './AlertDisplay';
 import { LinkContainer } from 'react-router-bootstrap'
 
-import { listProduct , deleteProduct } from '../Actions/productActions';
+import { listProduct , deleteProduct , createProduct } from '../Actions/productActions';
 
 
 
-
+import { PRODUCT_CREATE_RESET } from '../types/productTypes';
 
 
 
@@ -32,20 +32,29 @@ const ProductsList = ({ history }) => {
 
     const productDelete = useSelector(state => state.productDelete)
     const {loading:deleteLoading , success:deleteSuccess , error:deleteError} = productDelete
+
+
+    const productCreate = useSelector(state => state.productCreate)
+    const {loading:createLoading , error:createError , success:createSuccess , product:createdProduct } = productCreate
      
 
    
 
     useEffect(() => {
+         dispatch({type:PRODUCT_CREATE_RESET})
+        if (!user.isAdmin) {
+            history.push('/login')
+        }
 
-        if (user && user.isAdmin) {
-            dispatch(listProduct())
+        if (createSuccess) {
+            history.push(`/product/${createdProduct._id}/edit`)
         }
         else {
-            history.push('/')
+            dispatch(listProduct())
         }
+        
       
-    }, [dispatch , history , user])
+    }, [dispatch , history , user , createSuccess , createdProduct])
 
 
     if (!user) {
@@ -55,6 +64,10 @@ const ProductsList = ({ history }) => {
     const deleteUserHandler = (id) => {
         dispatch(deleteProduct(id))
     }
+
+    const createProductHandler = () => {
+        dispatch(createProduct())
+    }
     
     return (
         <>
@@ -63,9 +76,12 @@ const ProductsList = ({ history }) => {
                
 
             </Row>
-            <Row> <Col md={4}> <Button className='my-3'> <i className='fas fa-plus'></i>Create Product</Button> </Col></Row>
+            <Row> <Col md={4}> <Button onClick={createProductHandler} className='my-3'> <i className='fas fa-plus'></i>Create Product</Button> </Col></Row>
             { deleteSuccess && <AlertDisplay variant='success' error={'product Removed'} /> }
             { deleteError && <AlertDisplay variant='danger' error={deleteError} /> }
+
+            {/* { createSuccess && <AlertDisplay variant='success' error={'product created'} /> } */}
+            { createError && <AlertDisplay variant='danger' error={createError} /> }
             {loading? <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> : error ? <AlertDisplay variant='danger' error={error} /> :   (
                 <Table striped bordered hover responsive className='table-sm'>
                     <thead>

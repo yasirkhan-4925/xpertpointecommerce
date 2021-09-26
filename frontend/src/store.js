@@ -7,8 +7,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { cartReducer } from './reducers/cartReducers.js';
 import { getMyOrdersReducer,orderCreateReducer , orderDetailsReducer , orderPayReducer } from './reducers/orderReducer.js'
 import { singleUserEditReducer ,singleUserDetailReducer, userDeleteReducer,userLoginReducer , userRegisterReducer , userDetailsReducer,updateUserProfileReducer, userListReducer}from './reducers/userReducers.js'
-import { singleUserUpdate } from './Actions/userActions.js';
-import { productDeleteReducer } from './reducers/productReducers.js';
+
+import { productDeleteReducer , productCreateReducer } from './reducers/productReducers.js';
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -26,7 +26,8 @@ const reducer = combineReducers({
   userDelete: userDeleteReducer,
   singleUserDetail: singleUserDetailReducer,
   singleUserEdit: singleUserEditReducer,
-  productDelete:productDeleteReducer
+  productDelete: productDeleteReducer,
+  productCreate: productCreateReducer
 });
 
 const itemsFromLocaStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []

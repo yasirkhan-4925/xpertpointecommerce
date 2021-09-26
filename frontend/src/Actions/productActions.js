@@ -5,7 +5,9 @@ import {
   PRODUCTDETAILS_ERROR,
   PRODUCTDETAILS_REQUEST,
   PRODUCTDETAILS_SUCCESS,
-  PRODUCT_DELETE_ERROR , PRODUCT_DELETE_REQUEST , PRODUCT_DELETE_SUCCESS
+  PRODUCT_DELETE_ERROR, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS,
+  PRODUCT_CREATE_ERROR , PRODUCT_CREATE_REQUEST , PRODUCT_CREATE_SUCCESS
+  
 } from '../types/productTypes.js';
 import axios from 'axios';
 
@@ -72,6 +74,43 @@ export const deleteProduct = (id) => {
     } catch (error) {
       dispatch({
         type: PRODUCT_DELETE_ERROR,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+
+
+
+
+
+export const createProduct = () => {
+  return async (dispatch,getState) => {
+    try {
+    
+      dispatch({ type: PRODUCT_CREATE_REQUEST });
+      const config = {
+        headers: {
+        
+            Authorization:`Bearer ${getState().userLogin.user.token}`
+            
+        }
+    }
+     const {data} =  await axios.post(`/api/products`, {}, config);
+      
+      dispatch({ type: PRODUCT_CREATE_SUCCESS , payload:data });
+
+     
+
+   
+
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_CREATE_ERROR,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

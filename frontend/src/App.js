@@ -16,7 +16,7 @@ import OrderScreen from './components/OrderScreen';
 import UserList from './components/UserList';
 import UserEdit from './components/UserEdit'
 import ProductsList from './components/ProductsList';
-
+import ProductEdit from './components/ProductEdit';
 
 
 import {  Router, Route } from 'react-router-dom'
@@ -47,6 +47,7 @@ const  App  = () => {
           <Route path='/admin/userslist' component={UserList} exact />
           <Route path='/user/:id/edit' component={UserEdit} exact />
           <Route path='/admin/productslist' component={ProductsList} exact />
+          <Route path='/product/:id/edit' component={ProductEdit} exact />
           
       
        
