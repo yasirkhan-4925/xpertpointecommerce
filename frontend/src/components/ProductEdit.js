@@ -1,4 +1,4 @@
-import React, { useEffect , useRef } from 'react';
+import React, { useEffect , useRef , useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { productDetails , updateProduct} from '../Actions/productActions';
 import FormContainer from './FormContainer';
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import AlertDisplay from './AlertDisplay';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios'
 import { PRODUCT_UPDATE_RESET } from '../types/productTypes';
 
 
@@ -28,7 +29,7 @@ const schema = Yup.object({
 const ProductEdit = ({ history, match }) => {
     const formRef = useRef();
   const dispatch = useDispatch();
-
+   const [uploading, setUploading] = useState(false)
   const productUpdate = useSelector(state => state.productUpdate)
   const {success , loading:editLoading , error:editError} = productUpdate
   const productDetail = useSelector((state) => state.productDetail);
@@ -66,6 +67,28 @@ const ProductEdit = ({ history, match }) => {
       history.push('/');
     }
   }, [dispatch , history , match.params.id ,user , product.name , success ]);
+
+  const fileUploadHandler =  async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+    try {
+      const config = {
+        headers: {
+          'Content-Type':'multipart/form-data'
+        }
+      }
+      const { data } = await axios.post('/api/upload', formData, config)
+       
+      formRef.current.setFieldValue('image',data);
+      setUploading(false)
+    }
+    catch (error) {
+      console.log(error)
+      setUploading(false)
+    }
+   }
 
   return (
     <>
@@ -156,6 +179,12 @@ const ProductEdit = ({ history, match }) => {
                         {errors.image}
                       </Form.Control.Feedback>
                     </Form.Group>
+
+
+                    <Form.File id='image-file' label='choose image' custom onChange={fileUploadHandler}>
+                      
+                    </Form.File>
+                    { uploading && <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" />  }
                     
                     <Form.Group controlId='brand'>
                       <Form.Label>Brand</Form.Label>

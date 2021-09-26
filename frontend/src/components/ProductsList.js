@@ -42,17 +42,21 @@ const ProductsList = ({ history }) => {
 
     useEffect(() => {
          dispatch({type:PRODUCT_CREATE_RESET})
-        if (!user.isAdmin) {
-            history.push('/login')
+         
+         if (user && user.isAdmin) {
+            dispatch(listProduct())
+        }
+        else {
+            history.push('/')
         }
 
         if (createSuccess) {
             history.push(`/product/${createdProduct._id}/edit`)
         }
-        else {
-            dispatch(listProduct())
-        }
         
+    if (!user) {
+        history.push('/login')
+   }
       
     }, [dispatch , history , user , createSuccess , createdProduct])
 
