@@ -1,4 +1,4 @@
-import {GET_MY_ORDERS_ERROR , GET_MY_ORDERS_REQUEST , GET_MY_ORDERS_SUCCESS , ORDER_CREATE_ERROR, ORDER_CREATE_SUCCESS, ORDER_CREATE_REQUEST , ORDER_DETAILS_ERROR ,ORDER_DETAILS_SUCCESS ,ORDER_DETAILS_REQUEST , ORDER_PAY_ERROR ,ORDER_PAY_SUCCESS , ORDER_PAY_REQUEST , ORDER_PAY_RESET } from '../types/orderTypes.js'
+import { ORDER_DELIVERED_ERROR , ORDER_DELIVERED_REQUEST , ORDER_DELIVERED_SUCCESS , GET_ORDERS_ERROR , GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_MY_ORDERS_ERROR , GET_MY_ORDERS_REQUEST , GET_MY_ORDERS_SUCCESS , ORDER_CREATE_ERROR, ORDER_CREATE_SUCCESS, ORDER_CREATE_REQUEST , ORDER_DETAILS_ERROR ,ORDER_DETAILS_SUCCESS ,ORDER_DETAILS_REQUEST , ORDER_PAY_ERROR ,ORDER_PAY_SUCCESS , ORDER_PAY_REQUEST , ORDER_PAY_RESET, ORDER_DELIVERED_RESET } from '../types/orderTypes.js'
 
 
 
@@ -106,6 +106,64 @@ export const getMyOrdersReducer = (state={myOrders:[]}, action) => {
                 loading: false,
                 error:action.payload
             }
+        
+        default:
+            return state
+    }
+    
+}
+
+
+
+export const allOrdersReducer = (state={orders:[]}, action) => {
+
+
+    switch(action.type){
+        case GET_ORDERS_REQUEST:
+            return {
+                loading:true
+            }
+        case GET_ORDERS_SUCCESS: 
+            return {
+                loading:false,
+                orders:action.payload
+            }
+        
+        case GET_ORDERS_ERROR:
+            return{
+                loading: false,
+                error:action.payload
+            }
+        
+        default:
+            return state
+    }
+    
+}
+
+
+
+export const orderDeliveredReducer = (state={}, action) => {
+
+
+    switch(action.type){
+        case ORDER_DELIVERED_REQUEST:
+            return {
+                loading:true
+            }
+        case ORDER_DELIVERED_SUCCESS: 
+            return {
+                loading:false,
+                success:true
+            }
+        
+        case ORDER_DELIVERED_ERROR:
+            return{
+                loading: false,
+                error:action.payload
+            }
+        case ORDER_DELIVERED_RESET:
+            return {}
         
         default:
             return state

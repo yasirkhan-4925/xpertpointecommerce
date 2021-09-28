@@ -1,7 +1,7 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { protect  } from '../middleware/authMiddleware.js';
+import { protect  , isAdmin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -95,8 +95,41 @@ router.put('/:id/pay', protect, asyncHandler(async (req , res) => {
 
 
 
+// @desc get orders for admin
+// @route get/api/orders
+// @access private
 
 
+router.get('/', protect, isAdmin, asyncHandler(async (req, res) => {
+       
+    const orders = await Order.find({}).populate('user', 'name email')
+    res.json(orders)
+
+}))
+
+
+
+// @desc update order to delivered
+// @route get/api/orders/:id/delivered
+// @access private
+
+router.put('/:id/delivered' , protect ,isAdmin , asyncHandler(async (req,res)=>{
+     
+    const order = await Order.findById(req.params.id)
+
+    if (order) {
+           
+        order.isDelivered = true
+        order.deliveredAt = Date.now()
+        const updatedOrder = await order.save()
+        res.json(updatedOrder)
+         
+    } else {
+          throw new Error('order not found')
+    }
+    
+
+}))
 
 export default router
 

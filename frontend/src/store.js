@@ -5,7 +5,7 @@ import {productListReducer , productDetailsReducer} from './reducers/productRedu
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { cartReducer } from './reducers/cartReducers.js';
-import { getMyOrdersReducer,orderCreateReducer , orderDetailsReducer , orderPayReducer } from './reducers/orderReducer.js'
+import { getMyOrdersReducer,orderCreateReducer , orderDetailsReducer , orderPayReducer , allOrdersReducer , orderDeliveredReducer } from './reducers/orderReducer.js'
 import { singleUserEditReducer ,singleUserDetailReducer, userDeleteReducer,userLoginReducer , userRegisterReducer , userDetailsReducer,updateUserProfileReducer, userListReducer}from './reducers/userReducers.js'
 
 import { productDeleteReducer , productCreateReducer  , productUpdateReducer} from './reducers/productReducers.js';
@@ -28,7 +28,10 @@ const reducer = combineReducers({
   singleUserEdit: singleUserEditReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
-  productUpdate:productUpdateReducer
+  productUpdate: productUpdateReducer,
+  allOrders: allOrdersReducer,
+  orderDelivered: orderDeliveredReducer
+  
 });
 
 const itemsFromLocaStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
