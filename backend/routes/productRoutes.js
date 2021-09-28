@@ -119,4 +119,55 @@ router.post('/' , protect , isAdmin , asyncHandler( async (req, res)=>{
 
 }))
 
+
+
+
+// @desc: create product review
+// @route: put /api/products/:id/review
+// @acess: private and admin
+
+
+router.post('/:id/review' , protect , asyncHandler(async (req, res)=>{
+   
+  const { rating, comment } = req.body
+  
+  const product = await Product.findById(req.params.id)
+  
+
+  if (product) {
+        
+    const alreadyReviewd = product.reviews.find( r => r.user.toString() === req.user._id.toString() )
+   
+    if (alreadyReviewd) {
+    
+      throw new Error('product already reviewd')
+     
+  
+      
+    }
+     
+    const review = {
+      name: req.user.name,
+      rating:Number(rating),
+      comment: comment,
+      user:req.user._id
+
+    }
+
+    product.reviews.push(review)
+    product.numReviews = product.reviews.length
+    product.rating = product.reviews.reduce((acc, item) => item.rating  + acc , 0) /  (product.reviews.length) 
+  const updatedProduct=  await product.save()
+
+    res.status(201).json(updatedProduct)
+  }
+  else {
+    res.status(404)
+    throw new Error('no product found')
+  }
+
+    
+
+}))
+
 export default router;
