@@ -12,9 +12,24 @@ const router = express.Router();
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const products = await Product.find();
     
-     res.json(products)
+    const keyword = req.query.keyword ? {
+      name: {
+        $regex: req.query.keyword,
+        $options: 'i'
+      }
+    } : {}
+
+ 
+    const products = await Product.find({ ...keyword });
+    if (products.length>0) {
+      res.json(products)
+    }
+    else {
+      throw new Error('No product found')
+    }
+    
+    
   })
 );
 

@@ -5,6 +5,8 @@ import {Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Actions/userActions';
 import '../index.css'
+import SearchBar from './SearchBar'
+import {Route} from 'react-router-dom'
 
 
 
@@ -31,9 +33,11 @@ const Header = () => {
          
          
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
+          
           <Navbar.Collapse id='basic-navbar-nav'>
+          {/* <Route render={({ history})=>  <SearchBar history={history} /> }  /> */}
             <Nav className=' nav'>
-
+              
            
           
 

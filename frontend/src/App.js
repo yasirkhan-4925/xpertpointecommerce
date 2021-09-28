@@ -36,6 +36,7 @@ const  App  = () => {
           <Container>
         
           <Route path='/' component={Home} exact />
+          <Route path='/search/:keyword' component={Home} />
           <Route path='/product/:id' component={OneProduct} exact />
           <Route path='/cart/:id?' component={CartScreen} exact />
           <Route path='/login' component={LoginScreen} exact />

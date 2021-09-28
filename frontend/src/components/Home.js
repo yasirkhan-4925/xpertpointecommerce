@@ -7,6 +7,7 @@ import { Row, Col} from 'react-bootstrap'
 import Product from './Product'
 import { Spinner } from 'react-bootstrap';
 import AlertDisplay from './AlertDisplay'
+import SearchBar from './SearchBar'
 
 
 
@@ -15,19 +16,28 @@ import AlertDisplay from './AlertDisplay'
 
 
 
-const Home = ({ product ,listProduct , loading,error}) => {
-    
-    useEffect(() => {
-       
-        listProduct()
+const Home = ({ product ,listProduct , loading,error  ,match , history}) => {
       
-    }, [listProduct])
+    const keyword = match.params.keyword
+ 
+
+    useEffect(() => {
+        
+        listProduct(keyword)
+      
+    }, [listProduct , keyword])
     return (
         <>
           
             <h1>
                 Lattest Products
             </h1>
+
+            <Row className='mb-5'>
+                <Col md={4}>
+                <SearchBar history={history} />
+                </Col>
+            </Row>
 
             {loading ? <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> : error ? <AlertDisplay variant='danger'  error={ error}/>  :  <Row>
                   
