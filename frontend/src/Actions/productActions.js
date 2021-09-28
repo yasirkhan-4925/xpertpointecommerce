@@ -1,4 +1,5 @@
 import {
+  PRODUCT_ADD_REVIEW_REQUEST , PRODUCT_ADD_REVIEW_ERROR , PRODUCT_ADD_REVIEW_SUCCESS,
   PRODUCTLIST_ERROR,
   PRODUCTLIST_SUCCESS,
   PRODUCTLIST_REQUEST,
@@ -149,6 +150,42 @@ export const updateProduct = ( id, product) => {
     } catch (error) {
       dispatch({
         type: PRODUCT_UPDATE_ERROR,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+
+
+export const createReview = ( id, review) => {
+  return async (dispatch,getState) => {
+    try {
+    
+      dispatch({ type: PRODUCT_ADD_REVIEW_REQUEST });
+      const config = {
+        headers: {
+             'Content-Type':'application/json',
+            Authorization:`Bearer ${getState().userLogin.user.token}`
+            
+        }
+    }
+   
+      await axios.post(`/api/products/${id}/review`, review, config);
+      
+      dispatch({ type: PRODUCT_ADD_REVIEW_SUCCESS });
+
+
+    
+
+   
+
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_ADD_REVIEW_ERROR,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

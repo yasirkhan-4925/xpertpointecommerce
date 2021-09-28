@@ -140,7 +140,7 @@ router.post('/:id/review' , protect , asyncHandler(async (req, res)=>{
    
     if (alreadyReviewd) {
     
-      throw new Error('product already reviewd')
+      throw new Error('product already reviewd by you')
      
   
       

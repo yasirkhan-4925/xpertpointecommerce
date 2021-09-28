@@ -1,4 +1,4 @@
-import {  PRODUCT_UPDATE_ERROR, PRODUCT_UPDATE_REQUEST ,PRODUCT_UPDATE_SUCCESS , PRODUCT_UPDATE_RESET ,  PRODUCT_CREATE_ERROR , PRODUCT_CREATE_REQUEST , PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_ERROR , PRODUCT_DELETE_REQUEST , PRODUCT_DELETE_SUCCESS, PRODUCTLIST_ERROR , PRODUCTLIST_SUCCESS , PRODUCTLIST_REQUEST , PRODUCTDETAILS_ERROR , PRODUCTDETAILS_REQUEST, PRODUCTDETAILS_SUCCESS, PRODUCT_CREATE_RESET } from '../types/productTypes.js'
+import { PRODUCT_ADD_REVIEW_REQUEST , PRODUCT_ADD_REVIEW_ERROR , PRODUCT_ADD_REVIEW_SUCCESS , PRODUCT_ADD_REVIEW_RESET, PRODUCT_UPDATE_ERROR, PRODUCT_UPDATE_REQUEST ,PRODUCT_UPDATE_SUCCESS , PRODUCT_UPDATE_RESET ,  PRODUCT_CREATE_ERROR , PRODUCT_CREATE_REQUEST , PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_ERROR , PRODUCT_DELETE_REQUEST , PRODUCT_DELETE_SUCCESS, PRODUCTLIST_ERROR , PRODUCTLIST_SUCCESS , PRODUCTLIST_REQUEST , PRODUCTDETAILS_ERROR , PRODUCTDETAILS_REQUEST, PRODUCTDETAILS_SUCCESS, PRODUCT_CREATE_RESET } from '../types/productTypes.js'
 
 
 
@@ -147,3 +147,30 @@ export const productUpdateReducer = (state={product:{}}, action) => {
      }
 }
 
+
+
+export const productAddReviewReducer = (state={}, action) => {
+    switch (action.type) {
+
+        case PRODUCT_ADD_REVIEW_REQUEST:
+            return {
+                loading:true
+            }
+        case PRODUCT_ADD_REVIEW_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+            
+            }
+        case PRODUCT_ADD_REVIEW_ERROR:
+            return {
+                loading: false,
+                error:action.payload
+            }
+        case PRODUCT_ADD_REVIEW_RESET:
+            return {}
+        default:
+            return state
+
+     }
+}
