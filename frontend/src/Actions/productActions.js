@@ -15,12 +15,12 @@ import axios from 'axios';
 import { DateSchema } from 'yup';
 
 
-export const listProduct = (keyword='') => {
+export const listProduct = (keyword='' , pageNumber='') => {
   return async (dispatch) => {
     try {
       dispatch({ type: PRODUCTLIST_REQUEST });
       
-      const res = await axios.get(`/api/products?keyword=${keyword}`);
+      const res = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`);
 
       dispatch({ type: PRODUCTLIST_SUCCESS, payload: res.data });
     } catch (error) {

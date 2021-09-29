@@ -207,7 +207,7 @@ const OneProduct = ({ match , history }) => {
 
                                 </Form.Group>
 
-                                <Button type='submit' variant='primary'  > Add Review </Button>  
+                                <Button className='mt-3' type='submit' variant='primary'  > Add Review </Button>  
                               </Form>
                              </>
                            )  : <p>  please <Link to='/login'> login </Link> to write your reivew </p> }

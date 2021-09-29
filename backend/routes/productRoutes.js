@@ -1,7 +1,8 @@
 import express, { raw } from 'express';
 import asyncHandler from 'express-async-handler';
 import Product from '../models/productModel.js';
-import { protect , isAdmin } from '../middleware/authMiddleware.js';
+import { protect, isAdmin } from '../middleware/authMiddleware.js';
+
 
 const router = express.Router();
 
@@ -12,6 +13,9 @@ const router = express.Router();
 router.get(
   '/',
   asyncHandler(async (req, res) => {
+
+    const pageSize = 12
+    const page = Number(req.query.pageNumber) || 1
     
     const keyword = req.query.keyword ? {
       name: {
@@ -20,10 +24,10 @@ router.get(
       }
     } : {}
 
- 
-    const products = await Product.find({ ...keyword });
+    const count = await Product.countDocuments({...keyword})
+    const products = await Product.find({ ...keyword }).limit(pageSize).skip(pageSize * (page-1));
     if (products.length>0) {
-      res.json(products)
+      res.json({products , page, pages: Math.ceil(count/pageSize)} )
     }
     else {
       throw new Error('No product found')

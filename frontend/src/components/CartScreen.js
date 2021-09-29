@@ -9,6 +9,7 @@ import '../index.css'
 import { removeFromCart } from '../Actions/cartAction';
 
 
+
 const CartScreen = ({ match, location, history }) => {
     
 
@@ -48,7 +49,7 @@ const CartScreen = ({ match, location, history }) => {
     
     return (
         <Row>
-
+           
             <Col md={8}>
 
             <Link className='btn btn-light my-3 ' to='/'>

@@ -17,17 +17,19 @@ import { listProduct , deleteProduct , createProduct } from '../Actions/productA
 
 
 import { PRODUCT_CREATE_RESET } from '../types/productTypes';
+import Paginate from './Paginate';
 
 
 
-const ProductsList = ({ history }) => {
-      
+const ProductsList = ({ history , match }) => {
+    
+    const pageNumber = match.params.pageNumber || 1
 
     const dispatch = useDispatch()
     const userLogin = useSelector(state => state.userLogin)
     const { user } = userLogin
     const productList = useSelector(state => state.productList)
-    const { products, error, loading } = productList
+    const { products, error, loading , page, pages } = productList
  
 
     const productDelete = useSelector(state => state.productDelete)
@@ -44,7 +46,7 @@ const ProductsList = ({ history }) => {
          dispatch({type:PRODUCT_CREATE_RESET})
          
          if (user && user.isAdmin) {
-            dispatch(listProduct())
+            dispatch(listProduct('', pageNumber))
         }
         else {
             history.push('/')
@@ -52,13 +54,12 @@ const ProductsList = ({ history }) => {
 
         if (createSuccess) {
             history.push(`/product/${createdProduct._id}/edit`)
-        }
-        
+        } 
     if (!user) {
         history.push('/login')
    }
       
-    }, [dispatch , history , user , createSuccess , createdProduct])
+    }, [dispatch , history , user , createSuccess , createdProduct , pageNumber])
 
 
     if (!user) {
@@ -87,6 +88,7 @@ const ProductsList = ({ history }) => {
             {/* { createSuccess && <AlertDisplay variant='success' error={'product created'} /> } */}
             { createError && <AlertDisplay variant='danger' error={createError} /> }
             {loading? <Spinner className='spinner' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '120px' }} animation="border" /> : error ? <AlertDisplay variant='danger' error={error} /> :   (
+              <>
                 <Table striped bordered hover responsive className='table-sm'>
                     <thead>
                         <tr>
@@ -119,7 +121,9 @@ const ProductsList = ({ history }) => {
 
                         ))}
                     </tbody>
-            </Table>
+                    </Table>
+                    <Paginate pages={pages} page={page} isAdmin={true} />
+                    </>
         )}
     
    </>
