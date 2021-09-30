@@ -10,8 +10,8 @@ import {
   Spinner,
 } from 'react-bootstrap';
 import moment from 'moment'
-import PaypalButton from '../PayPalButton.js'
-import { PayPalButton } from 'react-paypal-button-v2';
+
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -191,32 +191,7 @@ const OrderScreen = ({ match, history }) => {
                   <Col>Rs {order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {/* {!order.isPaid && (
-                <ListGroup.Item>
-                  {loadingPay && (
-                    <Spinner
-                      className='spinner'
-                      style={{
-                        display: 'block',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        marginTop: '120px',
-                      }}
-                      animation='border'
-                    />
-                      )}
-                      { !sdkReady ? ( <Spinner
-                      className='spinner'
-                      style={{
-                        display: 'block',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        marginTop: '120px',
-                      }}
-                      animation='border'
-                      />) : <PaypalButton history={history} amount={order.totalPrice }/>  }
-                </ListGroup.Item>
-              )} */}
+             
               <ListGroup.Item>
                 <Button
                   onClick={backToHomeHandler}
@@ -228,10 +203,7 @@ const OrderScreen = ({ match, history }) => {
                   Back To Home
                 </Button>
                   </ListGroup.Item>
-                  <ListGroup.Item>
-                    { !order.isPaid && order.paymentMethod !== 'cash on delivery' && <PaypalButton id={match.params.id} history={history} total={order.totalPrice }/> }
-                 
-                  </ListGroup.Item>
+                
                  
             </ListGroup>
           </Col>
