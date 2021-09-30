@@ -11,7 +11,7 @@ import uploadRoutes from './routes/uploadRoutes.js'
 import { customErrorHandler, notFind } from './middleware/errorMiddleware.js'
 import path from 'path'
 import  mongoSanitize from 'express-mongo-sanitize'
-import helmet from 'helmet'
+
 
 import xss   from 'xss-clean'
 
@@ -32,7 +32,7 @@ app.use(mongoSanitize())
 
 //set security headers
 
-app.use(helmet());
+
 
 //prevent xss attacks 
 
