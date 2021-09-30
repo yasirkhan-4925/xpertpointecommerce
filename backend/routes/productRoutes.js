@@ -189,4 +189,16 @@ router.post('/:id/review' , protect , asyncHandler(async (req, res)=>{
 
 }))
 
+
+
+// @desc: this will  get top products
+// @route: /api/products/topproducts
+// @acess: public 
+
+router.get('/pro/topRatedProducts' , asyncHandler(async (req, res)=>{
+
+  const products = await Product.find({}).sort({rating:-1}).limit(4)
+  res.json(products)
+
+}))
 export default router;

@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import { listProduct} from '../Actions/productActions'
  import {useSelector} from 'react-redux'
 import axios from 'axios'
-import { Row, Col} from 'react-bootstrap'
+import { Row, Col , Container} from 'react-bootstrap'
 import Product from './Product'
 import { Spinner } from 'react-bootstrap';
 import AlertDisplay from './AlertDisplay'
 import SearchBar from './SearchBar'
-import Paginate  from './Paginate'
+import Paginate from './Paginate'
+import TopProductCarousal from './TopProductCarousal'
 
 
 
@@ -30,10 +31,11 @@ const Home = ({ product ,listProduct , loading,error  ,match , history}) => {
         listProduct(keyword , pageNumber)
        
     }, [listProduct , keyword , pageNumber])
-    return (
+    return  (
         <>
-          
-            <h1>
+            {!keyword && <TopProductCarousal />}
+           
+            <h1 className='mt-4'>
                 Lattest Products
             </h1>
 
@@ -55,6 +57,8 @@ const Home = ({ product ,listProduct , loading,error  ,match , history}) => {
             </Row>
             <Paginate pages={pages} page={page} keyword={ keyword ? keyword :''}  />
             </>)}
+        
+            
 
                 
 

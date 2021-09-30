@@ -8,11 +8,11 @@ import {
   PRODUCTDETAILS_SUCCESS,
   PRODUCT_DELETE_ERROR, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS,
   PRODUCT_CREATE_ERROR, PRODUCT_CREATE_REQUEST, PRODUCT_CREATE_SUCCESS,
-  PRODUCT_UPDATE_ERROR, PRODUCT_UPDATE_REQUEST ,PRODUCT_UPDATE_SUCCESS , PRODUCT_UPDATE_RESET 
+  PRODUCT_UPDATE_ERROR, PRODUCT_UPDATE_REQUEST ,PRODUCT_UPDATE_SUCCESS , PRODUCT_UPDATE_RESET,TOP_PRODUCTS_ERROR ,TOP_PRODUCTS_REQUEST , TOP_PRODUCTS_SUCCESS
   
 } from '../types/productTypes.js';
 import axios from 'axios';
-import { DateSchema } from 'yup';
+
 
 
 export const listProduct = (keyword='' , pageNumber='') => {
@@ -187,6 +187,27 @@ export const createReview = ( id, review) => {
     } catch (error) {
       dispatch({
         type: PRODUCT_ADD_REVIEW_ERROR,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+};
+
+
+export const listTopProducts = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: TOP_PRODUCTS_REQUEST });
+      
+      const res = await axios.get(`/api/products/pro/topRatedProducts`);
+
+      dispatch({ type: TOP_PRODUCTS_SUCCESS, payload: res.data });
+    } catch (error) {
+      dispatch({
+        type: TOP_PRODUCTS_ERROR,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

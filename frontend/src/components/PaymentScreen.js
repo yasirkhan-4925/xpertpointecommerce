@@ -39,7 +39,7 @@ const PaymentScreen = ({ history }) => {
             <Formik  validateOnChange={false}
         validateOnBlur={false}
                 validationSchema={schema} initialValues={{
-            paymentMethod:'paypal'
+            paymentMethod:'cash on delivery'
                 }} onSubmit={(data) => {
                     
                     dispatch(addPaymentMethod(data.paymentMethod))
@@ -53,11 +53,9 @@ const PaymentScreen = ({ history }) => {
                             <Form.Label as='legend'>Select Payment Method</Form.Label>
 
                                 <Col>
-                                    <Form.Check checked  type='radio' label='paypal or credit card' name='paymentMethod' value='paypal' onChange={handleChange}  >
-                                        
-                                    </Form.Check>
+                                   
                                     
-                                    <Form.Check  type='radio' label='cash on delivery' name='paymentMethod' value='cash on delivery' onChange={handleChange}  >
+                                    <Form.Check checked required  type='radio' label='cash on delivery' name='paymentMethod' value='cash on delivery' onChange={handleChange}  >
                                         
                                      </Form.Check>
                                 </Col>

@@ -1,4 +1,4 @@
-import { PRODUCT_ADD_REVIEW_REQUEST , PRODUCT_ADD_REVIEW_ERROR , PRODUCT_ADD_REVIEW_SUCCESS , PRODUCT_ADD_REVIEW_RESET, PRODUCT_UPDATE_ERROR, PRODUCT_UPDATE_REQUEST ,PRODUCT_UPDATE_SUCCESS , PRODUCT_UPDATE_RESET ,  PRODUCT_CREATE_ERROR , PRODUCT_CREATE_REQUEST , PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_ERROR , PRODUCT_DELETE_REQUEST , PRODUCT_DELETE_SUCCESS, PRODUCTLIST_ERROR , PRODUCTLIST_SUCCESS , PRODUCTLIST_REQUEST , PRODUCTDETAILS_ERROR , PRODUCTDETAILS_REQUEST, PRODUCTDETAILS_SUCCESS, PRODUCT_CREATE_RESET } from '../types/productTypes.js'
+import { TOP_PRODUCTS_ERROR ,TOP_PRODUCTS_REQUEST , TOP_PRODUCTS_SUCCESS  ,PRODUCT_ADD_REVIEW_REQUEST , PRODUCT_ADD_REVIEW_ERROR , PRODUCT_ADD_REVIEW_SUCCESS , PRODUCT_ADD_REVIEW_RESET, PRODUCT_UPDATE_ERROR, PRODUCT_UPDATE_REQUEST ,PRODUCT_UPDATE_SUCCESS , PRODUCT_UPDATE_RESET ,  PRODUCT_CREATE_ERROR , PRODUCT_CREATE_REQUEST , PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_ERROR , PRODUCT_DELETE_REQUEST , PRODUCT_DELETE_SUCCESS, PRODUCTLIST_ERROR , PRODUCTLIST_SUCCESS , PRODUCTLIST_REQUEST , PRODUCTDETAILS_ERROR , PRODUCTDETAILS_REQUEST, PRODUCTDETAILS_SUCCESS, PRODUCT_CREATE_RESET } from '../types/productTypes.js'
 
 
 
@@ -171,6 +171,32 @@ export const productAddReviewReducer = (state={}, action) => {
             }
         case PRODUCT_ADD_REVIEW_RESET:
             return {}
+        default:
+            return state
+
+     }
+}
+
+
+export const topProductsReducer = (state={}, action) => {
+    switch (action.type) {
+
+        case TOP_PRODUCTS_REQUEST:
+            return {
+                loading:true
+            }
+        case TOP_PRODUCTS_SUCCESS:
+            return {
+                loading: false,
+                products:action.payload
+            
+            }
+        case TOP_PRODUCTS_ERROR:
+            return {
+                loading: false,
+                error:action.payload
+            }
+      
         default:
             return state
 

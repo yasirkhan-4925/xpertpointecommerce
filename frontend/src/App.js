@@ -31,14 +31,15 @@ const  App  = () => {
     
      
       <Header />
-     
+      
       <main className='py-3'>
-          <Container>
-        
+         
+      <Container>
           <Route path='/' component={Home} exact />
           <Route path='/search/:keyword' component={Home} />
           <Route path='/page/:pageNumber' component={Home} />
           <Route path='/search/:keyword/page/:pageNumber' component={Home} />
+     
           <Route path='/product/:id' component={OneProduct} exact />
           <Route path='/cart/:id?' component={CartScreen} exact />
           <Route path='/login' component={LoginScreen} exact />

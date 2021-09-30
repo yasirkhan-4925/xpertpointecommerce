@@ -8,7 +8,7 @@ import { cartReducer } from './reducers/cartReducers.js';
 import { getMyOrdersReducer,orderCreateReducer , orderDetailsReducer , orderPayReducer , allOrdersReducer , orderDeliveredReducer } from './reducers/orderReducer.js'
 import { singleUserEditReducer ,singleUserDetailReducer, userDeleteReducer,userLoginReducer , userRegisterReducer , userDetailsReducer,updateUserProfileReducer, userListReducer}from './reducers/userReducers.js'
 
-import { productAddReviewReducer, productDeleteReducer , productCreateReducer  , productUpdateReducer} from './reducers/productReducers.js';
+import { topProductsReducer, productAddReviewReducer, productDeleteReducer , productCreateReducer  , productUpdateReducer} from './reducers/productReducers.js';
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -31,7 +31,8 @@ const reducer = combineReducers({
   productUpdate: productUpdateReducer,
   allOrders: allOrdersReducer,
   orderDelivered: orderDeliveredReducer,
-  productAddReview:productAddReviewReducer
+  productAddReview: productAddReviewReducer,
+  topProducts:topProductsReducer
   
 });
 

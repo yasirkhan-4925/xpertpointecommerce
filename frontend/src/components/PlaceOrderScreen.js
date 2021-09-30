@@ -14,6 +14,7 @@ import AlertDisplay from './AlertDisplay';
 import CheckoutStep from './CheckoutStep';
 import { Link } from 'react-router-dom';
 import { createOrder } from '../Actions/orderActions';
+import { ORDER_CREATE_RESET } from '../types/orderTypes';
 
 const PlaceOrderScreen = ({ history }) => {
     const cart = useSelector((state) => state.cart);
@@ -47,8 +48,11 @@ const PlaceOrderScreen = ({ history }) => {
     };
     
     useEffect(() => {
-        if (success) {
-               history.push(`/order/${order._id}`)
+      if (success) {
+          dispatch({type:ORDER_CREATE_RESET})
+          history.push(`/order/${order._id}`)
+
+          
            }
        }, [history, success])
   return (
