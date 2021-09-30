@@ -2,7 +2,8 @@ import express, { raw } from 'express';
 import asyncHandler from 'express-async-handler';
 import Product from '../models/productModel.js';
 import { protect, isAdmin } from '../middleware/authMiddleware.js';
-
+import fs from 'fs'
+import path from 'path'
 
 const router = express.Router();
 
@@ -63,7 +64,19 @@ router.get(
 router.delete('/:id' , protect , isAdmin , asyncHandler( async (req , res)=>{
 
   const product = await Product.findById(req.params.id)
+  console.log(product.image.split('/'))
   if (product) {
+    const __dirname = path.resolve()
+    
+    fs.unlink(path.join(__dirname,product.image), (err) => {
+      if (err) {
+          throw err 
+      }
+      else {
+        console.log('successfully deleted')
+      }
+      })
+      
     await product.remove()
     res.json({msg:'product removed'})
   }

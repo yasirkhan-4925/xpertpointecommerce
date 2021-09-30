@@ -10,7 +10,8 @@ import AlertDisplay from './AlertDisplay';
 import '../index.css'
 import { createReview } from '../Actions/productActions.js';
 
-import {PRODUCT_ADD_REVIEW_RESET} from '../types/productTypes' 
+import { PRODUCT_ADD_REVIEW_RESET } from '../types/productTypes'
+import Meta from './Meta'
 
 
 const OneProduct = ({ match , history }) => {
@@ -83,6 +84,7 @@ const OneProduct = ({ match , history }) => {
       ) : (
 
             <>
+              <Meta title={product.name} />
         <Row>
           <Col sm={6} md={6} lg={6} >
             <Image src={product.image} alt='product image' fluid />

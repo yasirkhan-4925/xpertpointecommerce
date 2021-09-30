@@ -10,14 +10,44 @@ import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 import { customErrorHandler, notFind } from './middleware/errorMiddleware.js'
 import path from 'path'
+import  mongoSanitize from 'express-mongo-sanitize'
+import helmet from 'helmet'
+
+import xss   from 'xss-clean'
+
+
+import hpp from 'hpp'
+import cors from 'cors'
 
 
 import products from './data/products.js';
 dotenv.config();
-
+const app = express();
 connect(); // function that is connection mongodb
 
-const app = express();
+
+// mongo sanitze to prevent sql injection 
+
+app.use(mongoSanitize())
+
+//set security headers
+
+app.use(helmet());
+
+//prevent xss attacks 
+
+app.use(xss())
+
+
+
+// prevent http params pollution 
+
+app.use(hpp());
+
+// enable cors
+
+app.use(cors())
+
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))

@@ -10,6 +10,8 @@ import AlertDisplay from './AlertDisplay'
 import SearchBar from './SearchBar'
 import Paginate from './Paginate'
 import TopProductCarousal from './TopProductCarousal'
+import Meta from './Meta'
+import{Link} from 'react-router-dom'
 
 
 
@@ -33,7 +35,11 @@ const Home = ({ product ,listProduct , loading,error  ,match , history}) => {
     }, [listProduct , keyword , pageNumber])
     return  (
         <>
-            {!keyword && <TopProductCarousal />}
+            
+            <Meta/>
+            {!keyword ? <TopProductCarousal /> :  <Link className='btn btn-light my-3 ' to='/'>
+        Go Back
+      </Link>}
            
             <h1 className='mt-4'>
                 Lattest Products
