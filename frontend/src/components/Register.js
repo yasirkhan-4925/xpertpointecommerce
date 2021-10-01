@@ -16,7 +16,7 @@ import {withRouter} from 'react-router-dom'
 const schema = Yup.object({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email('Enter Valid Email Address'),
-    phoneNo:Yup.string().max(11,'Phone nubmer should not contain more than 11 digits').matches(/^[0-9]+$/, "Must be only digits"),
+    phoneNo:Yup.string().max(11,'Phone nubmer should not contain more than 11 digits').matches(/^[0-9]+$/, "Must be only digits").required('phone no is required'),
     password: Yup.string().required('Password is required').min(6, 'Password should at least 6 characters long'),
     confirmPassword: Yup.string().required('confirm password is required').oneOf([Yup.ref('password'), null],'Passwords not matched')
     
