@@ -60,7 +60,7 @@ router.get('/profile', protect, asyncHandler(async (req , res) => {
       
     const user = await User.findById(req.user._id);
 
-
+   console.log(user)
     if (user) {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -71,7 +71,9 @@ router.get('/profile', protect, asyncHandler(async (req , res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            token:token
+            token: token,
+            phoneNo:user.phoneNo
+            
         })
     }
     else {
@@ -90,7 +92,7 @@ router.get('/profile', protect, asyncHandler(async (req , res) => {
 
 router.post('/', asyncHandler(async (req, res) => {
     
-    const { name, email, password } = req.body
+    const { name, email, password , phoneNo } = req.body
     
     const userExist = await User.findOne({ email })
     
@@ -102,7 +104,8 @@ router.post('/', asyncHandler(async (req, res) => {
     const user = await User.create({
         name,
         email,
-        password
+        password,
+        phoneNo
     })
 
 
@@ -143,6 +146,7 @@ router.put('/profile', protect, asyncHandler(async (req, res) => {
     if (user) {
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email
+        user.phoneNo = req.body.phoneNo || user.phoneNo
         if (req.body.password) {
             user.password = req.body.password
         }

@@ -24,6 +24,7 @@ import * as Yup from 'yup';
 const schema = Yup.object({
   name: Yup.string(),
   email: Yup.string().email('Enter Valid Email Address'),
+  phoneNo:Yup.string().max(11,'Phone nubmer should not contain more than 11 digits').matches(/^[0-9]+$/, "Must be only digits"),
   password: Yup.string().min(6, 'Password should at least 6 characters long'),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref('password'), null],
@@ -53,6 +54,8 @@ const ProfileScreen = ({ history, location }) => {
         if (formRef.current) {
           formRef.current.setFieldValue('name', user.name);
           formRef.current.setFieldValue('email', user.email);
+          formRef.current.setFieldValue('phoneNo', user.phoneNo);
+         
         }
       }
     }
@@ -80,7 +83,8 @@ const ProfileScreen = ({ history, location }) => {
                 animation='border'
               />
             ) : (
-              <Formik
+                <Formik
+                validateOnChange={false}
                 innerRef={formRef}
                 validationSchema={schema}
                 initialValues={{
@@ -88,18 +92,20 @@ const ProfileScreen = ({ history, location }) => {
                   email: '',
                   passowrd: '',
                   confirmPassword: '',
+                  phoneNo:''
                 }}
                 onSubmit={(data, { setSubmitting }) => {
-                  const { name, email, password } = data;
+                  const { name, email, password  , phoneNo} = data;
                   dispatch(
                     updateProfile({
                       id: userIsLogin._id,
                       name,
                       email,
+                      phoneNo:phoneNo.toString(),
                       password,
                     })
                   );
-                  console.log(data);
+                  
                 }}
               >
                 {({
@@ -144,6 +150,27 @@ const ProfileScreen = ({ history, location }) => {
                           {errors.email}
                         </Form.Control.Feedback>
                       </Form.Group>
+
+
+                      <Form.Group controlId='phoneNo'>
+                        <Form.Label>Phone No</Form.Label>
+                        <Form.Control
+                          placeholder='Enter Phone No'
+                          isInvalid={errors.phoneNo}
+                          type='text'
+                          value={values.phoneNo}
+                          onChange={handleChange}
+                          name='phoneNo'
+                        />
+
+                        <Form.Control.Feedback type='invalid'>
+                          {errors.phoneNo}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                     
+                     
+                     
+                     
 
                       <Form.Group controlId='password'>
                         <Form.Label>Password</Form.Label>

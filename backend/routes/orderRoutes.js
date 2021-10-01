@@ -78,7 +78,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id).populate(
       'user',
-      'name email'
+      'name email phoneNo'
     );
 
     if (order) {
@@ -129,7 +129,7 @@ router.get(
   protect,
   isAdmin,
   asyncHandler(async (req, res) => {
-    const orders = await Order.find({}).populate('user', 'name email');
+    const orders = await Order.find({}).populate('user', 'name email phoneNo');
     res.json(orders);
   })
 );

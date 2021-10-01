@@ -100,6 +100,10 @@ const AdminOrderDetails = ({ match, history }) => {
                 <p>
                   <strong>Email: </strong>
                     {order.user.email}
+                    </p>
+                    <p>
+                  <strong>Phone No: </strong>
+                    {order.user.phoneNo}
                 </p>
                 <p>
                   <strong>Address: </strong>

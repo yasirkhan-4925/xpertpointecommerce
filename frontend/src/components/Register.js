@@ -16,6 +16,7 @@ import {withRouter} from 'react-router-dom'
 const schema = Yup.object({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email('Enter Valid Email Address'),
+    phoneNo:Yup.string().max(11,'Phone nubmer should not contain more than 11 digits').matches(/^[0-9]+$/, "Must be only digits"),
     password: Yup.string().required('Password is required').min(6, 'Password should at least 6 characters long'),
     confirmPassword: Yup.string().required('confirm password is required').oneOf([Yup.ref('password'), null],'Passwords not matched')
     
@@ -77,15 +78,16 @@ const Register = ({location , history}) => {
                 name: '',
                 email: '',
                 passowrd: '',
-                confirmPassword: ''
+                confirmPassword: '',
+                phoneNo:''
             }} onSubmit={(data, { setSubmitting})=> {
                  
              
                  
                 // dispatch
-                const { name, email, password } = data
+                const { name, email, password , phoneNo} = data
                 
-                dispatch(register(name, email , password))
+                dispatch(register(name, email , password , phoneNo))
                 
 
               
@@ -115,6 +117,22 @@ const Register = ({location , history}) => {
                             <Form.Control.Feedback type='invalid' >{errors.email}</Form.Control.Feedback>
 
                         </Form.Group>
+
+                        <Form.Group controlId='phoneNo'>
+                        <Form.Label>Phone No</Form.Label>
+                        <Form.Control
+                          placeholder='Enter Phone No'
+                          isInvalid={errors.phoneNo}
+                          type='text'
+                          value={values.phoneNo}
+                          onChange={handleChange}
+                          name='phoneNo'
+                        />
+
+                        <Form.Control.Feedback type='invalid'>
+                          {errors.phoneNo}
+                        </Form.Control.Feedback>
+                      </Form.Group>
 
 
                          <Form.Group controlId='password'>
